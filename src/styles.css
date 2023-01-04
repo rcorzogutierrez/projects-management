@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
+body{
+   /* background-image: url('./assets/fondo.jpg'); */
+   background: linear-gradient(rgba(29,93,236,0.5), rgba(29,93,236,0.5)), url('./assets/fondo.jpg');
+   background-repeat: no-repeat;
+   background-position: center;
+   background-size: cover;
+   height: 100vh;
+}
