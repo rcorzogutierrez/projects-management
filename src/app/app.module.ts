@@ -8,6 +8,8 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule } from '@angular/forms';
+import 'zone.js';
+import 'zone.js/dist/long-stack-trace-zone.js';
 
 import { ToastrModule } from 'ngx-toastr';
 
@@ -15,26 +17,23 @@ import { ListClientesComponent } from './components/list-clientes/list-clientes.
 import { CreateClientesComponent } from './components/create-clientes/create-clientes.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
     ListClientesComponent,
     CreateClientesComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,    
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot()
-
+    ToastrModule.forRoot(),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
