@@ -13,15 +13,19 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 
 import { ToastrModule } from 'ngx-toastr';
 
-import { ListClientesComponent } from './components/list-clientes/list-clientes.component';
-import { CreateClientesComponent } from './components/create-clientes/create-clientes.component';
+import { ListClientesComponent } from './components/clientes/list-clientes/list-clientes.component';
+import { CreateClientesComponent } from './components/clientes/create-clientes/create-clientes.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CreateMaterialesComponent } from './components/materiales/create-materiales/create-materiales.component';
+import { ListMaterialesComponent } from './components/materiales/list-materiales/list-materiales.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListClientesComponent,
     CreateClientesComponent,
+    CreateMaterialesComponent,
+    ListMaterialesComponent,
     NavbarComponent,
   ],
   imports: [

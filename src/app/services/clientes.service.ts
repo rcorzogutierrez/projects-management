@@ -1,22 +1,25 @@
-
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import {  map, Observable, of } from 'rxjs';
-import { Project } from '../interfaces/project';
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+} from '@angular/fire/compat/firestore';
+import { map, Observable, of } from 'rxjs';
+//import { Project } from '../interfaces/project';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class ClientesService { 
-
-  constructor(private firestore: AngularFirestore) { }
+export class ClientesService {
+  constructor(private firestore: AngularFirestore) {}
 
   agregarClientes(cliente: any): Promise<any> {
     return this.firestore.collection('clientes').add(cliente);
   }
 
   getClientes(): Observable<any> {
-    return this.firestore.collection('clientes', ref => ref.orderBy('fechaCreacion', 'asc')).snapshotChanges();
+    return this.firestore
+      .collection('clientes', (ref) => ref.orderBy('fechaCreacion', 'asc'))
+      .snapshotChanges();
   }
 
   eliminarCliente(id: string): Promise<any> {
@@ -28,6 +31,6 @@ export class ClientesService {
   }
 
   actualizarCliente(id: string, data: any): Promise<any> {
-    return this.firestore.collection('clientes').doc(id).update(data)
+    return this.firestore.collection('clientes').doc(id).update(data);
   }
 }

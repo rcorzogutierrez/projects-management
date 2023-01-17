@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+//import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { map, Observable } from 'rxjs';
-import { ClientesService } from '../../services/clientes.service';
+//import { map, Observable } from 'rxjs';
+import { ClientesService } from '../../../services/clientes.service';
 
 @Component({
   selector: 'app-list-clientes',
