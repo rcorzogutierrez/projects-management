@@ -3,11 +3,12 @@
         <div class="col-lg-6 offset-lg-3">
             <div class="card text-center">'
                 <div class="card-body">
-                    <h3>Agregar Clientes <div *ngIf="loading" class="spinner-border float-right" role="status">
+                    <h3>{{titulo}} 
+                        <div *ngIf="loading" class="spinner-border text-primary float-right" role="status">
                         <span class="sr-only">Loading...</span>
                       </div></h3>
                     <span *ngIf="submitted && createCliente.invalid" class="badge badge-danger">Todos los campos son obligatorios</span>
-                    <form class="mt-4" [formGroup]="createCliente" (ngSubmit)="agregarCliente()">
+                    <form class="mt-4" [formGroup]="createCliente" (ngSubmit)="agregarEditarCliente()">
                         <div class="row">
                             <div class="col"><input type="text" class="form-control form-control-lg" formControlName="nombre" placeholder="Nombre"></div>
                             <div class="col"><input type="text" class="form-control form-control-lg" formControlName="apellidos"placeholder="Apellidos"></div>
