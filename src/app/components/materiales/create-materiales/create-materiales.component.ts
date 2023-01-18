@@ -75,7 +75,7 @@ export class CreateMaterialesComponent implements OnInit {
     const material: any = {
       nombre: this.createMaterial.value.nombre,
       descripcion: this.createMaterial.value.descripcion,
-      PerformanceNavigationTiming: this.createMaterial.value.precio,
+      precio: this.createMaterial.value.precio,
     };
     this.loading = true;
     this._materialService.actualizarMaterial(id, material).then(() => {
