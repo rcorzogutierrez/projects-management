@@ -1,0 +1,70 @@
+<div class="container pt-4">
+  <div class="row">
+    <div class="col-lg-6 offset-lg-3">
+      <div class="card text-center">
+        '
+        <div class="card-body">
+          <h3>
+            {{ titulo }}
+            <div
+              *ngIf="loading"
+              class="spinner-border text-primary float-right"
+              role="status"
+            >
+              <span class="sr-only">Loading...</span>
+            </div>
+          </h3>
+          <span
+            *ngIf="submitted && createMaterial.invalid"
+            class="badge badge-danger"
+            >Todos los campos son obligatorios</span
+          >
+          <form
+            class="mt-4"
+            [formGroup]="createMaterial"
+            (ngSubmit)="agregarEditarMaterial()"
+          >
+            <div class="row">
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  formControlName="nombre"
+                  placeholder="Nombre"
+                />
+              </div>
+              <div class="col">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  formControlName="precio"
+                  placeholder="Precio"
+                />
+              </div>
+            </div>
+            <input type="text" class="form-control form-control-lg mt-3" />
+            <textarea
+              class="form-control form-control-lg mt-3"
+              aria-label="With textarea"
+              formControlName="descripcion"
+              placeholder="Descripcion"
+            ></textarea>
+
+            <div class="mt-3">
+              <button
+                type="text"
+                class="btn btn-primary btn-lg mr-3"
+                routerLink="/list-materiales"
+              >
+                Volver
+              </button>
+              <button type="submit" class="btn btn-success btn-lg">
+                Agregar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
