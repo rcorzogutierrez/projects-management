@@ -36,8 +36,8 @@ export class ListMaterialesComponent implements OnInit {
     this._materialesService.eliminarMaterial(id).then(() => {
       console.log('eliminado');
       this.toastr.error(
-        'El cliente fue eliminado con exito',
-        'Cliente Eliminado',
+        'El material fue eliminado con exito',
+        'Material Eliminado',
         { positionClass: 'toast-top-right' }
       );
     });
