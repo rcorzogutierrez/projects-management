@@ -1,0 +1,43 @@
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <span class="hr">Lista de Materiales</span>
+      <button
+        class="btn btn-primary btn-lg float-right"
+        routerLink="/create-materiales"
+      >
+        Agregar
+      </button>
+      <h5 class="text-primary mt-3" *ngIf="materiales.length == 0">
+        No hay datos para mostrar
+      </h5>
+      <table *ngIf="materiales.length > 0" class="table table-striped mt-5">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let material of materiales">
+            <td>{{ material.nombre }}</td>
+            <td>{{ material.descripcion }}</td>
+            <td>{{ material.precio | currency }}</td>
+
+            <td>
+              <i
+                class="fas fa-edit fa-lg text-info mr-2"
+                [routerLink]="['/edit-material/', material.id]"
+              ></i>
+              <i
+                (click)="eliminarMateriales(material.id)"
+                class="fas fa-trash-alt fa-lg text-danger"
+              ></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'edit-cliente/:id', component: CreateClientesComponent },
   { path: 'list-materiales', component: ListMaterialesComponent },
   { path: 'create-materiales', component: CreateMaterialesComponent },
-  { path: 'edit-materiales/:id', component: CreateMaterialesComponent },
+  { path: 'edit-material/:id', component: CreateMaterialesComponent },
   { path: '**', redirectTo: 'list-clientes', pathMatch: 'full' },
 ];
 

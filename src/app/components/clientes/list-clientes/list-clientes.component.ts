@@ -11,14 +11,15 @@ import { ClientesService } from '../../../services/clientes.service';
 })
 export class ListClientesComponent {
   clientes: any[] = [];
-  clientprojects: any[] = [];
-  projects: any[] = [];
+  //clientprojects: any[] = [];
+  //projects: any[] = [];
   clientId = '0TYkv0jIVRMyPagqI3d3';
 
   constructor(
     private _clienteService: ClientesService,
     private toastr: ToastrService
   ) {}
+
   ngOnInit() {
     this.getClientes();
   }

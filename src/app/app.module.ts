@@ -18,6 +18,7 @@ import { CreateClientesComponent } from './components/clientes/create-clientes/c
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CreateMaterialesComponent } from './components/materiales/create-materiales/create-materiales.component';
 import { ListMaterialesComponent } from './components/materiales/list-materiales/list-materiales.component';
+import { MaterialesService } from './services/materiales.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ListMaterialesComponent } from './components/materiales/list-materiales
     ReactiveFormsModule,
     ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [MaterialesService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
