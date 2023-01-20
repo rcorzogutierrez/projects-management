@@ -19,6 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { CreateMaterialesComponent } from './components/materiales/create-materiales/create-materiales.component';
 import { ListMaterialesComponent } from './components/materiales/list-materiales/list-materiales.component';
 import { MaterialesService } from './services/materiales.service';
+import { ListProyectosComponent } from './components/proyectos/list-proyectos/list-proyectos.component';
+import { CreateProyectosComponent } from './components/proyectos/create-proyectos/create-proyectos.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { MaterialesService } from './services/materiales.service';
     CreateClientesComponent,
     CreateMaterialesComponent,
     ListMaterialesComponent,
+    CreateProyectosComponent,
+    ListProyectosComponent,
     NavbarComponent,
   ],
   imports: [
