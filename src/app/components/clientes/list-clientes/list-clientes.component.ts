@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ToastrService } from 'ngx-toastr';
-//import { map, Observable } from 'rxjs';
 import { ClientesService } from '../../../services/clientes.service';
 
 @Component({
@@ -12,8 +10,11 @@ import { ClientesService } from '../../../services/clientes.service';
 export class ListClientesComponent {
   clientes: any[] = [];
   projects: any[] = [];
+  matprojects: any[] = [];
   cliente ='';
+  proyecto ='';
   display=true;
+  idcliente=''
 
   constructor(
     private _clienteService: ClientesService,
@@ -33,8 +34,7 @@ export class ListClientesComponent {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
-      });
-      //console.log(this.clientes);
+      });    
     });
   }
 
@@ -51,12 +51,12 @@ export class ListClientesComponent {
 
   reloadCurrentPage() {
     this.display = true;
-    this.projects = [];
-    //window.location.reload();
+    this.projects = [];  
    }
 
   getProyectos(id: string, nombre:string) {
    this.cliente = nombre;
+   this.idcliente = id;
    //this.display = false;
     this._clienteService.getClienteProyectos(id).subscribe((data) => {
       //
@@ -72,5 +72,24 @@ export class ListClientesComponent {
       });
       //console.log(this.clientes);
     });
+  }
+
+  getconsole(id: string, idp:string){
+    console.log(id, idp)
+  }
+
+  getMatProyecto(idp:string, nproyecto:string){
+    this.proyecto= nproyecto;
+   const id = this.idcliente
+    this._clienteService.getClienteProyectoMateriales(id,idp).subscribe((data)=>{
+      this.matprojects = [];
+      data.forEach((element:any)=>{
+        this.matprojects.push({
+          id:element.payload.doc.id,
+          ...element.payload.doc.data()
+        })
+      })
+    })
+
   }
 }

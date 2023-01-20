@@ -38,4 +38,12 @@ export class ClientesService {
       .collection('proyectos')
       .snapshotChanges();
   }
+
+  getClienteProyectoMateriales(id: string, idp:string) {
+    return this.firestore
+      .collection('clientes')
+      .doc(id)
+      .collection('proyectos').doc(idp).collection('materiales')
+      .snapshotChanges();
+  }
 }

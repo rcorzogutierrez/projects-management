@@ -70,6 +70,40 @@
             <td>{{ proyecto.nombre }}</td>
             <td>{{ proyecto.direccion }}</td>
             <td>{{ proyecto.precioTotal | currency }}</td>
+            <td>
+              
+              <i
+                class="fas fa-plus fa-lg text-success"
+                (click)="getMatProyecto(proyecto.id,proyecto.nombre)"
+              ></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card" *ngIf="matprojects.length > 0">
+    <div class="card-body">
+      <span class="hr">Lista de Materailes del proyecto {{proyecto}}</span>
+     
+
+      <h5 class="text-primary mt-3" *ngIf="matprojects.length == 0">
+        No hay datos para mostrar
+      </h5>
+      <table *ngIf="projects.length > 0" class="table table-striped mt-5">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let matproject of matprojects">
+            <td>{{ matproject.nombre }}</td>
+            <td>{{ matproject.descripcion }}</td>
+            <td>{{ matproject.precio | currency }}</td> <td>
+            </td>
           </tr>
         </tbody>
       </table>
