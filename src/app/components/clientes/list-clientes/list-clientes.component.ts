@@ -12,7 +12,8 @@ import { ClientesService } from '../../../services/clientes.service';
 export class ListClientesComponent {
   clientes: any[] = [];
   projects: any[] = [];
-  cliente: any[] = [];
+  cliente ='';
+  display=true;
 
   constructor(
     private _clienteService: ClientesService,
@@ -24,6 +25,7 @@ export class ListClientesComponent {
   }
 
   getClientes() {
+    this.display = true;
     this._clienteService.getClientes().subscribe((data) => {
       this.clientes = [];
       data.forEach((element: any) => {
@@ -47,14 +49,26 @@ export class ListClientesComponent {
     });
   }
 
-  getProyectos(id: string) {
+  reloadCurrentPage() {
+    this.display = true;
+    this.projects = [];
+    //window.location.reload();
+   }
+
+  getProyectos(id: string, nombre:string) {
+   this.cliente = nombre;
+   //this.display = false;
     this._clienteService.getClienteProyectos(id).subscribe((data) => {
+      //
       this.projects = [];
+      
       data.forEach((element: any) => {
         this.projects.push({
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
+        if (this.projects.length == 0) {this.display = true;}else{this.display = false;}
+        //console.log(this.projects.length)
       });
       //console.log(this.clientes);
     });

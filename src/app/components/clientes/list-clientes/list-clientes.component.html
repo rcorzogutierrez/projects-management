@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <div class="card">
+  <div *ngIf='display == true' class="card" >
     <div class="card-body">
       <span class="hr">Lista de Clientes</span>
       <button
@@ -38,7 +38,7 @@
               ></i>
               <i
                 class="fas fa-plus fa-lg text-success"
-                (click)="getProyectos(cliente.id)"
+                (click)="getProyectos(cliente.id, cliente.nombre)"
               ></i>
             </td>
           </tr>
@@ -48,7 +48,11 @@
   </div>
   <div class="card" *ngIf="projects.length > 0">
     <div class="card-body">
-      <span class="hr">Lista de Proyectos de </span>
+      <span class="hr">Lista de Proyectos de {{cliente}}</span>
+      <button
+      class="btn btn-primary btn-lg float-right" (click)="reloadCurrentPage()">
+      Atras
+    </button>
 
       <h5 class="text-primary mt-3" *ngIf="projects.length == 0">
         No hay datos para mostrar
