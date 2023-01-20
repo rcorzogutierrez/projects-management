@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'list-proyectos', component: ListProyectosComponent },
   { path: 'create-proyectos', component: CreateProyectosComponent },
   { path: 'edit-proyectos/:id', component: CreateProyectosComponent },
+  { path: 'list-cliente-proyectos/:id', component: ListProyectosComponent },
   { path: '**', redirectTo: 'list-clientes', pathMatch: 'full' },
 ];
 

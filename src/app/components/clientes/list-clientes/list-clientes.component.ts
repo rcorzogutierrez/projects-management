@@ -11,9 +11,8 @@ import { ClientesService } from '../../../services/clientes.service';
 })
 export class ListClientesComponent {
   clientes: any[] = [];
-  //clientprojects: any[] = [];
-  //projects: any[] = [];
-  clientId = '0TYkv0jIVRMyPagqI3d3';
+  projects: any[] = [];
+  cliente: any[] = [];
 
   constructor(
     private _clienteService: ClientesService,
@@ -45,6 +44,19 @@ export class ListClientesComponent {
         'Cliente Eliminado',
         { positionClass: 'toast-top-right' }
       );
+    });
+  }
+
+  getProyectos(id: string) {
+    this._clienteService.getClienteProyectos(id).subscribe((data) => {
+      this.projects = [];
+      data.forEach((element: any) => {
+        this.projects.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data(),
+        });
+      });
+      //console.log(this.clientes);
     });
   }
 }

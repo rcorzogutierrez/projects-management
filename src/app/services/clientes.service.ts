@@ -30,4 +30,12 @@ export class ClientesService {
   actualizarCliente(id: string, data: any): Promise<any> {
     return this.firestore.collection('clientes').doc(id).update(data);
   }
+
+  getClienteProyectos(id: string) {
+    return this.firestore
+      .collection('clientes')
+      .doc(id)
+      .collection('proyectos')
+      .snapshotChanges();
+  }
 }

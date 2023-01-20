@@ -34,9 +34,38 @@
               ></i>
               <i
                 (click)="eliminarCliente(cliente.id)"
-                class="fas fa-trash-alt fa-lg text-danger"
+                class="fas fa-trash-alt fa-lg text-danger mr-2"
+              ></i>
+              <i
+                class="fas fa-plus fa-lg text-success"
+                (click)="getProyectos(cliente.id)"
               ></i>
             </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card" *ngIf="projects.length > 0">
+    <div class="card-body">
+      <span class="hr">Lista de Proyectos de </span>
+
+      <h5 class="text-primary mt-3" *ngIf="projects.length == 0">
+        No hay datos para mostrar
+      </h5>
+      <table *ngIf="projects.length > 0" class="table table-striped mt-5">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Direccion</th>
+            <th>precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let proyecto of projects">
+            <td>{{ proyecto.nombre }}</td>
+            <td>{{ proyecto.direccion }}</td>
+            <td>{{ proyecto.precioTotal | currency }}</td>
           </tr>
         </tbody>
       </table>
