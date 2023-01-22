@@ -11,6 +11,10 @@
       <h5 class="text-primary mt-3" *ngIf="clientes.length == 0">
         No hay datos para mostrar
       </h5>
+      <div class="form-group mt-5">
+      
+        <input type="text" class="form-control" id="search" (keyup)="searchClient($event)" placeholder="Buscar Clientes por el nombre">
+      </div>
       <table *ngIf="clientes.length > 0" class="table table-striped mt-5">
         <thead>
           <tr>
@@ -22,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cliente of clientes">
+          <tr *ngFor="let cliente of clientes | filter:searchText">
             <td>{{ cliente.nombre }}</td>
             <td>{{ cliente.apellidos }}</td>
             <td>{{ cliente.documento }}</td>

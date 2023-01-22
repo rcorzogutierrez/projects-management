@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ClientesService } from '../../../services/clientes.service';
+import { FilterPipe } from '../../..//pipes/filter.pipe';
 
 @Component({
   selector: 'app-list-clientes',
   templateUrl: './list-clientes.component.html',
   styleUrls: ['./list-clientes.component.css'],
+ 
 })
 export class ListClientesComponent {
   clientes: any[] = [];
@@ -14,12 +16,13 @@ export class ListClientesComponent {
   cliente ='';
   proyecto ='';
   display=true;
-  idcliente=''
+  idcliente='';
+  searchText: string = '';
 
   constructor(
     private _clienteService: ClientesService,
     private toastr: ToastrService
-  ) {}
+  ) {this.searchText = '';}
 
   ngOnInit() {
     this.getClientes();
@@ -91,5 +94,10 @@ export class ListClientesComponent {
       })
     })
 
+  }
+  searchClient(event: KeyboardEvent) {
+    if (event.target) {
+      this.searchText = (event.target as HTMLInputElement).value;
+  }
   }
 }
