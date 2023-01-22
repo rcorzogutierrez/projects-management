@@ -9,7 +9,8 @@ export class FilterPipe implements PipeTransform {
     if(!searchText) return clients;
     searchText = searchText && searchText.toLowerCase();
     return clients.filter( it => {
-      return it.nombre && it.nombre.toLowerCase().includes(searchText);
+      return (it.nombre && it.nombre.toLowerCase().includes(searchText)) || (it.apellidos && it.apellidos.toLowerCase().includes(searchText));
+
     });
   }
 }
