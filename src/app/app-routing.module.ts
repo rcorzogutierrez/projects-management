@@ -4,6 +4,8 @@ import { ListClientesComponent } from './components/clientes/list-clientes/list-
 import { CreateClientesComponent } from './components/clientes/create-clientes/create-clientes.component';
 import { CreateMaterialesComponent } from './components/materiales/create-materiales/create-materiales.component';
 import { ListMaterialesComponent } from './components/materiales/list-materiales/list-materiales.component';
+import { CreateTrabajadoresComponent } from './components/trabajadores/create-trabajadores/create-trabajadores.component';
+import { ListTrabajadoresComponent } from './components/trabajadores/list-trabajadores/list-trabajadores.component';
 
 
 const routes: Routes = [
@@ -14,6 +16,9 @@ const routes: Routes = [
   { path: 'list-materiales', component: ListMaterialesComponent },
   { path: 'create-materiales', component: CreateMaterialesComponent },
   { path: 'edit-material/:id', component: CreateMaterialesComponent },
+  { path: 'list-trabajadores', component: ListTrabajadoresComponent },
+  { path: 'create-trabajadores', component: CreateTrabajadoresComponent },
+  { path: 'edit-trabajador/:id', component: CreateTrabajadoresComponent },
   { path: '**', redirectTo: 'list-clientes', pathMatch: 'full' },
 ];
 

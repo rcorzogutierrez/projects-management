@@ -20,6 +20,9 @@ import { CreateMaterialesComponent } from './components/materiales/create-materi
 import { ListMaterialesComponent } from './components/materiales/list-materiales/list-materiales.component';
 import { MaterialesService } from './services/materiales.service';
 import { FilterPipe } from './pipes/filter.pipe';
+import { CreateTrabajadoresComponent } from './components/trabajadores/create-trabajadores/create-trabajadores.component';
+import { ListTrabajadoresComponent } from './components/trabajadores/list-trabajadores/list-trabajadores.component';
+import { TrabajadoresService } from './services/trabajadores.service';
 
 
 @NgModule({
@@ -30,7 +33,9 @@ import { FilterPipe } from './pipes/filter.pipe';
     CreateMaterialesComponent,
     ListMaterialesComponent,  
     NavbarComponent,
-    FilterPipe
+    FilterPipe,
+    CreateTrabajadoresComponent,
+    ListTrabajadoresComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +46,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
   ],
-  providers: [MaterialesService],
+  providers: [MaterialesService,TrabajadoresService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
