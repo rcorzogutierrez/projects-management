@@ -57,6 +57,8 @@ export class ListClientesComponent {
 
   reloadCurrentPage() {
     this.displayc = true;
+    this.displayp = true;
+    this.displaym = true;
     this.projects = []; 
     this.matprojects = [];
    }
