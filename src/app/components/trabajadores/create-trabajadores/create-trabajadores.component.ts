@@ -29,7 +29,7 @@ export class CreateTrabajadoresComponent implements OnInit{
       cargo: ['', Validators.required],
     });
     this.id = this.aRoute.snapshot.paramMap.get('id');
-    console.log(this.id);
+    //console.log(this.id);
   }
 
   ngOnInit() {

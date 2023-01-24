@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ClientesService } from '../../../services/clientes.service';
-import { FilterPipe } from '../../..//pipes/filter.pipe';
+
 
 @Component({
   selector: 'app-list-clientes',
@@ -15,7 +15,9 @@ export class ListClientesComponent {
   matprojects: any[] = [];
   cliente ='';
   proyecto ='';
-  display=true;
+  displayc=true;
+  displayp=true;
+  displaym=true;
   idcliente='';
   searchText: string = '';
 
@@ -25,11 +27,12 @@ export class ListClientesComponent {
   ) {this.searchText = '';}
 
   ngOnInit() {
-    this.getClientes();
+    this.getClientes(); 
+  
   }
 
   getClientes() {
-    this.display = true;
+    this.displayc = true;
     this._clienteService.getClientes().subscribe((data) => {
       this.clientes = [];
       data.forEach((element: any) => {
@@ -53,16 +56,16 @@ export class ListClientesComponent {
   }
 
   reloadCurrentPage() {
-    this.display = true;
-    this.projects = [];  
+    this.displayc = true;
+    this.projects = []; 
+    this.matprojects = [];
    }
 
   getProyectos(id: string, nombre:string) {
    this.cliente = nombre;
-   this.idcliente = id;
-   //this.display = false;
+   this.idcliente = id; 
     this._clienteService.getClienteProyectos(id).subscribe((data) => {
-      //
+
       this.projects = [];
       
       data.forEach((element: any) => {
@@ -70,15 +73,11 @@ export class ListClientesComponent {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
-        if (this.projects.length == 0) {this.display = true;}else{this.display = false;}
+        if (this.projects.length == 0) {this.displayc = true;}else{this.displayc = false;}
         //console.log(this.projects.length)
       });
       //console.log(this.clientes);
     });
-  }
-
-  getconsole(id: string, idp:string){
-    console.log(id, idp)
   }
 
   getMatProyecto(idp:string, nproyecto:string){
@@ -90,7 +89,8 @@ export class ListClientesComponent {
         this.matprojects.push({
           id:element.payload.doc.id,
           ...element.payload.doc.data()
-        })
+        });
+        if (this.matprojects.length == 0) {this.displayp = true;}else{this.displayp = false;}
       })
     })
 

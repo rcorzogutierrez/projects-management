@@ -35,7 +35,7 @@ export class ListTrabajadoresComponent implements OnInit {
 
   eliminarTrabajadores(id: string) {
     this._trabajadoresService.eliminarTrabajador(id).then(() => {
-      console.log('eliminado');
+      //console.log('eliminado');
       this.toastr.error(
         'El trabajador fue eliminado con exito',
         'Trabajador Eliminado',
