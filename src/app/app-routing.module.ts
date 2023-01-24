@@ -6,6 +6,7 @@ import { CreateMaterialesComponent } from './components/materiales/create-materi
 import { ListMaterialesComponent } from './components/materiales/list-materiales/list-materiales.component';
 import { CreateTrabajadoresComponent } from './components/trabajadores/create-trabajadores/create-trabajadores.component';
 import { ListTrabajadoresComponent } from './components/trabajadores/list-trabajadores/list-trabajadores.component';
+import { CreateProyectosComponent } from './components/proyectos/create-proyectos/create-proyectos.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'edit-material/:id', component: CreateMaterialesComponent },
   { path: 'list-trabajadores', component: ListTrabajadoresComponent },
   { path: 'create-trabajadores', component: CreateTrabajadoresComponent },
+  { path: 'create-proyectos', component: CreateProyectosComponent },
   { path: 'edit-trabajador/:id', component: CreateTrabajadoresComponent },
   { path: '**', redirectTo: 'list-clientes', pathMatch: 'full' },
 ];

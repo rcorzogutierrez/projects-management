@@ -23,6 +23,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { CreateTrabajadoresComponent } from './components/trabajadores/create-trabajadores/create-trabajadores.component';
 import { ListTrabajadoresComponent } from './components/trabajadores/list-trabajadores/list-trabajadores.component';
 import { TrabajadoresService } from './services/trabajadores.service';
+import { CreateProyectosComponent } from './components/proyectos/create-proyectos/create-proyectos.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { TrabajadoresService } from './services/trabajadores.service';
     NavbarComponent,
     FilterPipe,
     CreateTrabajadoresComponent,
-    ListTrabajadoresComponent
+    ListTrabajadoresComponent,
+    CreateProyectosComponent
   ],
   imports: [
     BrowserModule,

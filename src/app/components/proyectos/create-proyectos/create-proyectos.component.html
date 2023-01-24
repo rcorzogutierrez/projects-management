@@ -1,0 +1,15 @@
+<div class="container mt-4">
+    <div class="card" >
+      <div class="card-body">
+        <span class="hr">Crear un Proyecto</span>
+<form [formGroup]="form">
+    <div class="form-group">
+      <label>Seleccionar cliente:</label>
+      <select formControlName="clientSelect" class="form-control">
+        <option *ngFor="let client of clients" [value]="client.id">{{ client.nombre }} {{ client.apellidos }}</option>
+      </select>
+    </div>
+  </form>
+  </div></div></div>
+`
+
