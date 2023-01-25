@@ -1,15 +1,63 @@
 <div class="container mt-4">
-    <div class="card" >
-      <div class="card-body">
-        <span class="hr">Crear un Proyecto</span>
-<form [formGroup]="form">
-    <div class="form-group">
-      <label>Seleccionar cliente:</label>
-      <select formControlName="clientSelect" class="form-control">
-        <option *ngFor="let client of clients" [value]="client.id">{{ client.nombre }} {{ client.apellidos }}</option>
-      </select>
-    </div>
-  </form>
-  </div></div></div>
-`
+    <div class="card">
+        <div class="card-body">
+            <span class="hr">Crear un Proyecto</span>
+            <form [formGroup]="form">
+                <div class="form-group">
+                    <!-- Cliente -->
+                    <label>Seleccionar cliente:</label>
+                    <select formControlName="clientSelect" class="form-control">
+                        <option *ngFor="let client of clients" [value]="client.id">{{ client.nombre }} {{
+                            client.apellidos }}</option>
+                    </select>
+                </div>
+                <!-- Materiales -->
+                <div class="row">
+                    <div class="col-6">
+                        <h3>Materiales disponibles</h3>
+                        <ul>
+                            <li *ngFor="let material of materials" (click)="selectMaterial(material)">
+                                {{ material.nombre }}
+                                <button class="btn btn-success" (click)="selectMaterial(material)">
+                                    <i class="fas fa-plus fa-1x"></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <h3>Materiales seleccionados</h3>
+                        <ul>
+                            <li *ngFor="let selectedMaterial of selectedMaterials">
+                                {{ selectedMaterial.nombre }} - {{ selectedMaterial.precio | currency}} - Cantidad: {{
+                                selectedMaterial.quantity }}
+                                <button class="btn btn-danger" (click)="unselectMaterial(selectedMaterial)">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </li>
+                        </ul>
+                        <p>Precio total: {{ totalPrice | currency}}</p>
+                    </div>
+                </div>
 
+
+                <!-- Trabajadores -->
+                <div class="row">
+                    <div class="col-6">
+                        <h3>Trabajadores disponibles</h3>
+                        <ul>
+                            <li *ngFor="let trabajador of trabajadores" (click)="selectTrabajador(trabajador)">{{
+                                trabajador.nombre }}</li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <h3>Trabajadores seleccionados</h3>
+                        <ul>
+                            <li *ngFor="let selectedTrabajador of selectedTrabajadores"
+                                (click)="unselectTrabajador(selectedTrabajador)">{{ selectedTrabajador.nombre }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import 'zone.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
 
@@ -46,6 +46,7 @@ import { CreateProyectosComponent } from './components/proyectos/create-proyecto
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     ReactiveFormsModule,
+    FormsModule,
     ToastrModule.forRoot(),
   ],
   providers: [MaterialesService,TrabajadoresService],
