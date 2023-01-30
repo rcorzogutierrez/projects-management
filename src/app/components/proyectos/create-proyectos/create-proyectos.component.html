@@ -1,63 +1,100 @@
-<div class="container mt-4">
-    <div class="card">
-        <div class="card-body">
-            <span class="hr">Crear un Proyecto</span>
-            <form [formGroup]="form">
-                <div class="form-group">
-                    <!-- Cliente -->
-                    <label>Seleccionar cliente:</label>
-                    <select formControlName="clientSelect" class="form-control">
-                        <option *ngFor="let client of clients" [value]="client.id">{{ client.nombre }} {{
-                            client.apellidos }}</option>
-                    </select>
-                </div>
-                <!-- Materiales -->
-                <div class="row">
-                    <div class="col-6">
-                        <h3>Materiales disponibles</h3>
-                        <ul>
-                            <li *ngFor="let material of materials" (click)="selectMaterial(material)">
-                                {{ material.nombre }}
-                                <button class="btn btn-success" (click)="selectMaterial(material)">
-                                    <i class="fas fa-plus fa-1x"></i>
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-6">
-                        <h3>Materiales seleccionados</h3>
-                        <ul>
-                            <li *ngFor="let selectedMaterial of selectedMaterials">
-                                {{ selectedMaterial.nombre }} - {{ selectedMaterial.precio | currency}} - Cantidad: {{
-                                selectedMaterial.quantity }}
-                                <button class="btn btn-danger" (click)="unselectMaterial(selectedMaterial)">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </li>
-                        </ul>
-                        <p>Precio total: {{ totalPrice | currency}}</p>
-                    </div>
-                </div>
-
-
-                <!-- Trabajadores -->
-                <div class="row">
-                    <div class="col-6">
-                        <h3>Trabajadores disponibles</h3>
-                        <ul>
-                            <li *ngFor="let trabajador of trabajadores" (click)="selectTrabajador(trabajador)">{{
-                                trabajador.nombre }}</li>
-                        </ul>
-                    </div>
-                    <div class="col-6">
-                        <h3>Trabajadores seleccionados</h3>
-                        <ul>
-                            <li *ngFor="let selectedTrabajador of selectedTrabajadores"
-                                (click)="unselectTrabajador(selectedTrabajador)">{{ selectedTrabajador.nombre }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </form>
+<div class="container">
+    <form [formGroup]="form">
+        <div class="form-group pt-4 col-6">
+            <!--  <label for="clientSelect" class="card">Select a client:</label> -->
+            <select formControlName="clientSelect" class="form-control" id="clientSelect">
+                <option value="" selected="selected">-- Selecciona un cliente --</option>
+                <option *ngFor="let client of clients" [value]="client.id">
+                    {{client.nombre}} {{client.apellidos}}
+                </option>
+            </select>
         </div>
-    </div>
+
+        <!-- <div *ngIf="clientList.selectedIndex === clientList.options.length - 1"> -->
+        <div>
+            <div class="row">
+                <div class="col-6 left-section">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-center text-info">Materiales disponibles</h4>
+
+                        </div>
+                    </div>
+                    <div *ngFor="let material of materials" class="card">
+                        <div class="card-body row-cols-3">
+                            <span class="card-title col-6 font-weight-bold">{{material.nombre}}</span>
+                            <span class="card-text col-4">{{material.precio | currency}}</span>
+                            <button (click)="addMaterial(material)" class="btn btn-primary float-right btn-sm">Add to
+                                cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 right-section">
+                    <div class="card" *ngIf="selectedMaterials.length > 0">
+                        <div class="card-body">
+                            <h4 class="card-title text-center text-info">Materiales seleccionados</h4>
+
+                        </div>
+                    </div>
+                    <div *ngFor="let selected of selectedMaterials" class="card">
+                        <div class="card-body row-cols-4">
+                            <span class="card-title col-6 font-weight-bold">{{selected.nombre}}</span>
+                            <span class="card-text col-4">{{selected.precio |currency}}</span>
+                            <span>Quantity: <input type="number" formControlName="quantity_{{selected.id}}" value="1"
+                                    class="col-2"></span>
+                            <button (click)="removeMaterial(selected)"
+                                class="btn btn-danger btn-sm float-right">Remove</button>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedMaterials.length > 0" class="alert alert-success text-center">
+                        Sub-Total Price Materiales: <span class="font-weight-bold">{{updateTotal() |currency}}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-5">
+                <div class="col-6 left-section">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-center text-info">Trabajadores disponibles</h4>
+
+                        </div>
+                    </div>
+                    <div class="card" *ngFor="let trabajador of trabajadores">
+                        <div class="card-body row-cols-4" (click)="selectTrabajador(trabajador)">
+                            <div class="card-title">{{trabajador.nombre }} {{trabajador.apellidos }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6" *ngIf="selectedTrabajadores.length > 0">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-center text-info">Trabajadores seleccionados</h4>
+                        </div>
+                    </div>
+                    <div class="card" *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
+                        <div class="card-body">
+                            <span class="card-text col-4 font-weight-bold"
+                                (click)="unselectTrabajador(selectedTrabajador)">{{ selectedTrabajador.nombre }} {{
+                                selectedTrabajador.apellidos }}
+                            </span>
+                            <span class="card-text">
+                                <input formControlName="horas" type="number" placeholder="C/horas" class="col-2"
+                                    [formControl]="selectedTrabajadores[i].form.get('horas')"
+                                    (input)="updateSubtotal(selectedTrabajador)"></span>
+                            <span class="card-text">
+                                <input formControlName="precioHora" type="number" class="col-2 m-2"
+                                    [formControl]="selectedTrabajadores[i].form.get('precioHora')"
+                                    (input)="updateSubtotal(selectedTrabajador)" placeholder="$/hora">
+                            </span> <span class="card-text">Subtotal: {{ selectedTrabajador.subtotal | currency}}</span>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedTrabajadores.length > 0" class="alert alert-success text-center">
+                        Sub-Total Trabajadores: <span class="font-weight-bold"> {{totalT | currency}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
