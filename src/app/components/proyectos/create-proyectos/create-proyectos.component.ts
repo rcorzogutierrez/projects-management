@@ -13,6 +13,7 @@ import { Materiales } from 'src/app/interfaces/materiales';
 export class CreateProyectosComponent implements OnInit {
   form: FormGroup;
   clients: any[] = [];
+  clientSelect = '';
   materials: Materiales[] = [];
   trabajadores: any[] = [];
   selectedTrabajadores: any[] = [];
@@ -33,6 +34,8 @@ export class CreateProyectosComponent implements OnInit {
   ) {
     this.form = new FormGroup({
       clientSelect: new FormControl(''),
+      clientType:new FormControl(''),
+      projecType:new FormControl(''),
       materials: new FormArray([]),
       name: new FormControl(''),
       price: new FormControl(''),
@@ -69,6 +72,11 @@ export class CreateProyectosComponent implements OnInit {
       });
     });
   }
+
+  onSelected(value:string): void {
+		this.clientSelect= value;
+    console.log(this.clientSelect.length)
+	}
 
   addMaterial(material: Materiales) {
     if (material && material.id) {
@@ -149,9 +157,8 @@ export class CreateProyectosComponent implements OnInit {
   }
 
   totalProyecto() {
-    this.totalP = this.updateTotal() + this.totalT
-    console.log(this.totalP)
-  }
+    this.totalP = this.updateTotal() + this.totalT;
+  } 
 }
 
 

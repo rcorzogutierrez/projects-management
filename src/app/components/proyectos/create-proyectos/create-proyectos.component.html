@@ -1,17 +1,46 @@
 <div class="container">
     <form [formGroup]="form">
-        <div class="form-group pt-4 col-6">
-            <!--  <label for="clientSelect" class="card">Select a client:</label> -->
-            <select formControlName="clientSelect" class="form-control" id="clientSelect">
-                <option value="" selected="selected">-- Selecciona un cliente --</option>
-                <option *ngFor="let client of clients" [value]="client.id">
-                    {{client.nombre}} {{client.apellidos}}
-                </option>
-            </select>
+        <div class="row form-group ">
+            <div class="pt-4 col-4 input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="clientSelect">Cliente</label>
+                </div>
+                <select formControlName="clientSelect" class="form-control" id="clientSelect" #clientSelect
+                    (change)="onSelected(clientSelect.value)">
+                    <option value="none" selected disabled>Select an Option</option>
+                    <option *ngFor="let client of clients" [value]="client.id">
+                        {{client.nombre}} {{client.apellidos}}
+                    </option>
+                </select>
+            </div>
+            <div class="pt-4 col-4 right-section input-group mb-3" *ngIf="clientSelect.value">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="clientType">Tipo Cliente</label>
+                </div>
+
+                <select formControlName="clientType" class="form-control" id="clientType">
+                    <option value="none" selected disabled>Select an Option</option>
+                    <option value="1"> Comercial</option>
+                    <option value="2"> Residencial</option>
+                </select>
+            </div>
+            <div class="pt-4 col-4 right-section input-group mb-3" *ngIf="clientSelect.value">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="projecType">Tipo de proyecto</label>
+                </div>
+                <select formControlName="projecType" class="form-control" id="clientType">
+                    <option value="none" selected disabled>Select an Option</option>
+                    <option value="1"> Nueva construccion</option>
+                    <option value="2"> Servicio</option>
+                </select>
+            </div>
         </div>
 
-        <!-- <div *ngIf="clientList.selectedIndex === clientList.options.length - 1"> -->
-        <div>
+        <div *ngIf="totalP > 0" class="alert alert-success text-center">
+            Total Proyecto: <h5 class="font-weight-bold">{{totalP |currency}}</h5>
+        </div>
+
+        <div *ngIf="clientSelect.value">
             <div class="row">
                 <div class="col-6 left-section">
 
@@ -53,47 +82,63 @@
                 </div>
             </div>
 
-            <div class="row pt-5">
-                <div class="col-6 left-section">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title text-center text-info">Trabajadores disponibles</h4>
 
-                        </div>
-                    </div>
-                    <div class="card" *ngFor="let trabajador of trabajadores">
-                        <div class="card-body row-cols-4" (click)="selectTrabajador(trabajador)">
-                            <div class="card-title">{{trabajador.nombre }} {{trabajador.apellidos }}</div>
-                        </div>
-                    </div>
+            <div class="row pt-5">
+                <div *ngIf="trabajadores.length <= 0" class="alert alert-success text-center col-6">
+                    <span class="font-weight-bold">No hay trabajadores Disponibles</span>
                 </div>
+
+                <div class="col-6 left-section card" *ngIf="trabajadores.length > 0">
+                    <div class="card-header text-center text-info font-weight-bold">
+                        Trabajadores disponibles
+                    </div>
+
+                    <ul class="list-group list-group-flush" *ngFor="let trabajador of trabajadores">
+                        <li class="list-group-item row-cols" (click)="selectTrabajador(trabajador)">
+                            <span class="card-title">{{trabajador.nombre }} {{trabajador.apellidos }} <i
+                                    class="fas fa-plus-circle fa-lg text-info float-right"></i></span>
+                        </li>
+                    </ul>
+                </div>
+
+
                 <div class="col-6" *ngIf="selectedTrabajadores.length > 0">
                     <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title text-center text-info">Trabajadores seleccionados</h4>
+                        <div class="card-header text-center text-info font-weight-bold">
+                            Trabajadores seleccionados
                         </div>
-                    </div>
-                    <div class="card" *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
-                        <div class="card-body">
-                            <span class="card-text col-4 font-weight-bold"
-                                (click)="unselectTrabajador(selectedTrabajador)">{{ selectedTrabajador.nombre }} {{
-                                selectedTrabajador.apellidos }}
-                            </span>
-                            <span class="card-text">
-                                <input formControlName="horas" type="number" placeholder="C/horas" class="col-2"
-                                    [formControl]="selectedTrabajadores[i].form.get('horas')"
-                                    (input)="updateSubtotal(selectedTrabajador)"></span>
-                            <span class="card-text">
-                                <input formControlName="precioHora" type="number" class="col-2 m-2"
-                                    [formControl]="selectedTrabajadores[i].form.get('precioHora')"
-                                    (input)="updateSubtotal(selectedTrabajador)" placeholder="$/hora">
-                            </span> <span class="card-text">Subtotal: {{ selectedTrabajador.subtotal | currency}}</span>
+                        <div class="list-group"
+                            *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
+                            <div class="list-group-item font-weight-bold">
+                                <div class="input-group mb-3 ">
+                                <span  (click)="unselectTrabajador(selectedTrabajador)"> 
+                                    <i class="fas fa-minus-circle fa-lg text-danger m-2"></i>{{
+                                    selectedTrabajador.nombre }} {{selectedTrabajador.apellidos }}</span></div>
+                                <div class="input-group  mb-3 ">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="horas">horas</span>
+                                    </div>
+                                    <input id="horas" formControlName="horas" type="number" placeholder="C/horas"
+                                         [formControl]="selectedTrabajadores[i].form.get('horas')"
+                                        (input)="updateSubtotal(selectedTrabajador)">
+                                </div>
+                                <div class="input-group  mb-3">  
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text" id="precioHora">Precio Hora </span>
+                                </div>
+                                <input formControlName="precioHora" type="number" id="precioHora"
+                                        [formControl]="selectedTrabajadores[i].form.get('precioHora')"
+                                        (input)="updateSubtotal(selectedTrabajador) " placeholder="$/hora" ></div>
+                                <hr>
+                                <div>Subtotal: {{ selectedTrabajador.subtotal | currency}}</div>
+                            </div>
                         </div>
                     </div>
                     <div *ngIf="selectedTrabajadores.length > 0" class="alert alert-success text-center">
                         Sub-Total Trabajadores: <span class="font-weight-bold"> {{totalT | currency}}</span>
                     </div>
                 </div>
+
             </div>
         </div>
     </form>
