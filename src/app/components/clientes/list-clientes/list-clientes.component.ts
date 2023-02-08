@@ -20,6 +20,8 @@ export class ListClientesComponent {
   displaym=true;
   idcliente='';
   searchText: string = '';
+  itemsPerPage = 10;
+  p = 1;
 
   constructor(
     private _clienteService: ClientesService,
