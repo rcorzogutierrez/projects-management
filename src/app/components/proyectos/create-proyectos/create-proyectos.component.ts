@@ -83,7 +83,7 @@ export class CreateProyectosComponent implements OnInit {
       let selectedMaterial = this.selectedMaterials.find(m => m.id === material.id);
       let initialQuantity = 1;
       if (!selectedMaterial) {
-        this.selectedMaterials.push({ ...material, quantity: initialQuantity });
+        this.selectedMaterials.push({ ...material, quantity: 1 });
         selectedMaterial = this.selectedMaterials[this.selectedMaterials.length - 1];
       } else {
         initialQuantity = selectedMaterial.quantity;
@@ -96,7 +96,6 @@ export class CreateProyectosComponent implements OnInit {
       this.totalProyecto()
     }
   }
-
 
   removeMaterial(material: Materiales) {
     this.selectedMaterials = this.selectedMaterials.filter(

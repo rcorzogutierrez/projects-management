@@ -67,7 +67,7 @@
                         <div class="card-body row-cols-4">
                             <span class="card-title col-6 font-weight-bold">{{selected.nombre}}</span>
                             <span class="card-text col-4">{{selected.precio |currency}}</span>
-                            <span>Quantity: <input type="number" formControlName="quantity_{{selected.id}}" value="1"
+                            <span>Quantity: <input type="number" formControlName="quantity_{{selected.id}}" [(ngModel)]="selected.quantity"
                                     class="col-2"></span>
                             <button (click)="removeMaterial(selected)"
                                 class="btn btn-danger btn-sm float-right">Remove</button>
