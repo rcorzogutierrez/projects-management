@@ -43,17 +43,15 @@
         <div *ngIf="clientSelect.value">
             <div class="row">
                 <div class="col-6 left-section">
-
                     <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title text-center text-info">Materiales disponibles</h4>
-
+                        <div class="card-header text-center text-info font-weight-bold">
+                            Materiales disponibles
                         </div>
                     </div>
                     <div *ngFor="let material of materials" class="card">
-                        <div class="card-body row-cols-3">
-                            <span class="card-title col-6 font-weight-bold">{{material.nombre}}</span>
-                            <span class="card-text col-4">{{material.precio | currency}}</span>
+                        <div class="list-group list-group-item row-cols">
+                            <span class="col-6 font-weight-bold">{{material.nombre}}</span>
+                            <span class=" col-4">{{material.precio | currency}}</span>
                             <button (click)="addMaterial(material)" class="btn btn-primary float-right btn-sm">Add to
                                 cart</button>
                         </div>
@@ -61,9 +59,8 @@
                 </div>
                 <div class="col-6 right-section">
                     <div class="card" *ngIf="selectedMaterials.length > 0">
-                        <div class="card-body">
-                            <h4 class="card-title text-center text-info">Materiales seleccionados</h4>
-
+                        <div class="card-header text-center text-info font-weight-bold">
+                            Materiales seleccionados
                         </div>
                     </div>
                     <div *ngFor="let selected of selectedMaterials" class="card">
@@ -84,21 +81,25 @@
 
 
             <div class="row pt-5">
-                <div *ngIf="trabajadores.length <= 0" class="alert alert-success text-center col-6">
-                    <span class="font-weight-bold">No hay trabajadores Disponibles</span>
-                </div>
-
-                <div class="col-6 left-section card" *ngIf="trabajadores.length > 0">
-                    <div class="card-header text-center text-info font-weight-bold">
-                        Trabajadores disponibles
+                <div class="left-section col-6">
+                    <div *ngIf="trabajadores.length <= 0" class="alert alert-success text-center">
+                        <span class="font-weight-bold">No hay trabajadores Disponibles</span>
                     </div>
 
-                    <ul class="list-group list-group-flush" *ngFor="let trabajador of trabajadores">
-                        <li class="list-group-item row-cols" (click)="selectTrabajador(trabajador)">
-                            <span class="card-title">{{trabajador.nombre }} {{trabajador.apellidos }} <i
-                                    class="fas fa-plus-circle fa-lg text-info float-right"></i></span>
-                        </li>
-                    </ul>
+                    <div class="card" *ngIf="trabajadores.length > 0">
+
+                        <div class="card-header text-center text-info font-weight-bold">
+                            Trabajadores disponibles
+                        </div>
+
+                        <ul class="list-group list-group-item" *ngFor="let trabajador of trabajadores">
+                            <li class="list-group-item row-cols" (click)="selectTrabajador(trabajador)">
+                                <span class="card-title">{{trabajador.nombre }} {{trabajador.apellidos }} 
+                                    <i class="fas fa-plus-circle fa-lg text-info float-right"></i>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
 
@@ -107,28 +108,29 @@
                         <div class="card-header text-center text-info font-weight-bold">
                             Trabajadores seleccionados
                         </div>
-                        <div class="list-group"
-                            *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
+                        <div class="list-group" *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
                             <div class="list-group-item font-weight-bold">
                                 <div class="input-group mb-3 ">
-                                <span  (click)="unselectTrabajador(selectedTrabajador)"> 
-                                    <i class="fas fa-minus-circle fa-lg text-danger m-2"></i>{{
-                                    selectedTrabajador.nombre }} {{selectedTrabajador.apellidos }}</span></div>
+                                    <span (click)="unselectTrabajador(selectedTrabajador)">
+                                        <i class="fas fa-minus-circle fa-lg text-danger m-2"></i>{{
+                                        selectedTrabajador.nombre }} {{selectedTrabajador.apellidos }}</span>
+                                </div>
                                 <div class="input-group  mb-3 ">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="horas">horas</span>
                                     </div>
                                     <input id="horas" formControlName="horas" type="number" placeholder="C/horas"
-                                         [formControl]="selectedTrabajadores[i].form.get('horas')"
+                                        [formControl]="selectedTrabajadores[i].form.get('horas')"
                                         (input)="updateSubtotal(selectedTrabajador)">
                                 </div>
-                                <div class="input-group  mb-3">  
+                                <div class="input-group  mb-3">
                                     <div class="input-group-prepend">
-                                    <span class="input-group-text" id="precioHora">Precio Hora </span>
-                                </div>
-                                <input formControlName="precioHora" type="number" id="precioHora"
+                                        <span class="input-group-text" id="precioHora">Precio Hora </span>
+                                    </div>
+                                    <input formControlName="precioHora" type="number" id="precioHora"
                                         [formControl]="selectedTrabajadores[i].form.get('precioHora')"
-                                        (input)="updateSubtotal(selectedTrabajador) " placeholder="$/hora" ></div>
+                                        (input)="updateSubtotal(selectedTrabajador) " placeholder="$/hora">
+                                </div>
                                 <hr>
                                 <div>Subtotal: {{ selectedTrabajador.subtotal | currency}}</div>
                             </div>
