@@ -26,7 +26,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let cliente of clientes | filter:searchText">
+          <tr *ngFor="let cliente of clientes | filter:searchText | paginate: { itemsPerPage: itemsPerPage, currentPage: p }">
             <td>{{ cliente.nombre }}</td>
             <td>{{ cliente.apellidos }}</td>
             <td>{{ cliente.documento }}</td>
@@ -48,6 +48,16 @@
           </tr>
         </tbody>
       </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item" [ngClass]="{'disabled': currentPage === 0}">
+            <a class="page-link" (click)="previousPage()">Previous</a>
+          </li>
+          <li class="page-item" [ngClass]="{'disabled': end >= clientes.length}">
+            <a class="page-link" (click)="nextPage()">Next</a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
   <div class="card" *ngIf="projects.length > 0">
