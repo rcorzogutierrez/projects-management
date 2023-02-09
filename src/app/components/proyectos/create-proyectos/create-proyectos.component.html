@@ -1,11 +1,11 @@
 <div class="container">
     <form [formGroup]="form">
         <div class="row form-group ">
-            <div class="pt-4 col-4 input-group mb-3">
+            <div class="pt-4 col input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="clientSelect">Cliente</label>
                 </div>
-                <select formControlName="clientSelect" class="form-control" id="clientSelect" #clientSelect
+                <select formControlName="clientSelect" class="form-control form-select" id="clientSelect" #clientSelect
                     (change)="onSelected(clientSelect.value)">
                     <option value="none" selected disabled>Select an Option</option>
                     <option *ngFor="let client of clients" [value]="client.id">
@@ -13,22 +13,22 @@
                     </option>
                 </select>
             </div>
-            <div class="pt-4 col-4 right-section input-group mb-3" *ngIf="clientSelect.value">
+            <div class="pt-4 col right-section input-group mb-3" *ngIf="clientSelect.value">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="clientType">Tipo Cliente</label>
                 </div>
 
-                <select formControlName="clientType" class="form-control" id="clientType">
+                <select formControlName="clientType" class="form-control form-select" id="clientType">
                     <option value="none" selected disabled>Select an Option</option>
                     <option value="1"> Comercial</option>
                     <option value="2"> Residencial</option>
                 </select>
             </div>
-            <div class="pt-4 col-4 right-section input-group mb-3" *ngIf="clientSelect.value">
+            <div class="pt-4 col right-section input-group mb-3" *ngIf="clientSelect.value">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="projecType">Tipo de proyecto</label>
                 </div>
-                <select formControlName="projecType" class="form-control" id="clientType">
+                <select formControlName="projecType" class="form-control form-select" id="clientType">
                     <option value="none" selected disabled>Select an Option</option>
                     <option value="1"> Nueva construccion</option>
                     <option value="2"> Servicio</option>
@@ -42,7 +42,7 @@
 
         <div *ngIf="clientSelect.value">
             <div class="row">
-                <div class="col-6 left-section">
+                <div class="col left-section">
                     <div class="card">
                         <div class="card-header text-center text-info font-weight-bold">
                             Materiales disponibles
@@ -50,8 +50,8 @@
                     </div>
                     <div *ngFor="let material of materials" class="card">
                         <div class="list-group list-group-item row-cols">
-                            <span class="col-6 font-weight-bold">{{material.nombre}}</span>
-                            <span class=" col-4">{{material.precio | currency}}</span>
+                            <span class="font-weight-bold">{{material.nombre}}</span>
+                            <span class="">{{material.precio | currency}}</span>
                             <button (click)="addMaterial(material)" class="btn btn-primary float-right btn-sm">Add to
                                 cart</button>
                         </div>
@@ -89,7 +89,7 @@
                     <div class="card" *ngIf="trabajadores.length > 0">
 
                         <div class="card-header text-center text-info font-weight-bold">
-                            Trabajadores disponibles <span class="badge badge-pill badge-warning">{{trabajadores.length}}</span>
+                            Trabajadores disponibles <span class="badge rounded-pill bg-warning">{{trabajadores.length}}</span>
                         </div>
 
                         <ul class="list-group list-group-item" *ngFor="let trabajador of trabajadores">
@@ -106,7 +106,7 @@
                 <div class="col-6" *ngIf="selectedTrabajadores.length > 0">
                     <div class="card">
                         <div class="card-header text-center text-info font-weight-bold">
-                            Trabajadores seleccionados <span class="badge badge-pill badge-success">{{selectedTrabajadores.length}}</span>
+                            Trabajadores seleccionados <span class="badge rounded-pill bg-success">{{selectedTrabajadores.length}}</span>
                         </div>
                         <div class="list-group" *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
                             <div class="list-group-item font-weight-bold">

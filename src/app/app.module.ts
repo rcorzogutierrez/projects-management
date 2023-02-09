@@ -24,6 +24,9 @@ import { CreateTrabajadoresComponent } from './components/trabajadores/create-tr
 import { ListTrabajadoresComponent } from './components/trabajadores/list-trabajadores/list-trabajadores.component';
 import { TrabajadoresService } from './services/trabajadores.service';
 import { CreateProyectosComponent } from './components/proyectos/create-proyectos/create-proyectos.component';
+import { LoginComponent } from './components/login/login.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
 
 
 @NgModule({
@@ -37,7 +40,10 @@ import { CreateProyectosComponent } from './components/proyectos/create-proyecto
     FilterPipe,
     CreateTrabajadoresComponent,
     ListTrabajadoresComponent,
-    CreateProyectosComponent
+    CreateProyectosComponent,
+    LoginComponent,
+    DashboardComponent,
+    RecuperarPasswordComponent
   ],
   imports: [
     BrowserModule,

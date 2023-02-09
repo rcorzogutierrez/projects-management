@@ -7,10 +7,16 @@ import { ListMaterialesComponent } from './components/materiales/list-materiales
 import { CreateTrabajadoresComponent } from './components/trabajadores/create-trabajadores/create-trabajadores.component';
 import { ListTrabajadoresComponent } from './components/trabajadores/list-trabajadores/list-trabajadores.component';
 import { CreateProyectosComponent } from './components/proyectos/create-proyectos/create-proyectos.component';
+import { LoginComponent } from './components/login/login.component';
+import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'list-clientes', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'recuperar-password', component: RecuperarPasswordComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'list-clientes', component: ListClientesComponent },
   { path: 'create-clientes', component: CreateClientesComponent },
   { path: 'edit-cliente/:id', component: CreateClientesComponent },
@@ -21,7 +27,7 @@ const routes: Routes = [
   { path: 'create-trabajadores', component: CreateTrabajadoresComponent },
   { path: 'create-proyectos', component: CreateProyectosComponent },
   { path: 'edit-trabajador/:id', component: CreateTrabajadoresComponent },
-  { path: '**', redirectTo: 'list-clientes', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
 @NgModule({
