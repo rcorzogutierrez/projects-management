@@ -3,7 +3,7 @@ import { ClientesService } from '../../../services/clientes.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaterialesService } from '../../../services/materiales.service';
 import { TrabajadoresService } from '../../../services/trabajadores.service';
-import { Materiales } from 'src/app/interfaces/materiales';
+import { Materiales } from '../../../interfaces/materiales';
 
 @Component({
   selector: 'app-create-proyectos',
