@@ -1,6 +1,9 @@
-<div class="container">
+<div class="container mt-5">
+ 
     <form [formGroup]="form">
-        <div class="row form-group ">
+       
+        <div class="row form-group "><figure class="text-center">
+            <div class="mt-3"> <h1 class="display-6 text-primary">Crear Proyecto</h1></div></figure>
             <div class="pt-4 col input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="clientSelect">Cliente</label>
@@ -37,44 +40,47 @@
         </div>
 
         <div *ngIf="totalP > 0" class="alert alert-success text-center">
-            Total Proyecto: <h5 class="font-weight-bold">{{totalP |currency}}</h5>
+            Total Proyecto: <h5 class="fw-bold">{{totalP |currency}}</h5>
         </div>
 
         <div *ngIf="clientSelect.value">
-            <div class="row">
+            <div class="row pt-3">
                 <div class="col left-section">
                     <div class="card">
-                        <div class="card-header text-center text-info font-weight-bold">
+                        <div class="card-header text-center text-info fw-bold">
                             Materiales disponibles
                         </div>
                     </div>
-                    <div *ngFor="let material of materials" class="card">
-                        <div class="list-group list-group-item row-cols">
-                            <span class="font-weight-bold">{{material.nombre}}</span>
-                            <span class="">{{material.precio | currency}}</span>
-                            <button (click)="addMaterial(material)" class="btn btn-primary float-right btn-sm">Add to
-                                cart</button>
-                        </div>
+                    <div *ngFor="let material of materials">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <span class="fw-bold text-info">{{material.nombre}}</span>
+                            <span class="text-muted fw-bold">{{material.precio | currency}}</span>
+                            <button (click)="addMaterial(material)" class="btn btn-primary float-end btn-sm">Add to
+                                cart</button></li>
+                            </ul>
                     </div>
                 </div>
-                <div class="col-6 right-section">
+                <div class="col right-section">
                     <div class="card" *ngIf="selectedMaterials.length > 0">
-                        <div class="card-header text-center text-info font-weight-bold">
+                        <div class="card-header text-center text-info fw-bold">
                             Materiales seleccionados
                         </div>
                     </div>
                     <div *ngFor="let selected of selectedMaterials" class="card">
-                        <div class="card-body row-cols-4">
-                            <span class="card-title col-6 font-weight-bold">{{selected.nombre}}</span>
-                            <span class="card-text col-4">{{selected.precio |currency}}</span>
-                            <span>Cantidad: <input type="number" formControlName="quantity_{{selected.id}}" [(ngModel)]="selected.quantity"
-                                    class="col-2"></span>
-                            <button (click)="removeMaterial(selected)"
-                                class="btn btn-danger btn-sm float-right">Remove</button>
-                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex  align-items-start ">
+                            <span class="fw-bold text-info input-group">{{selected.nombre}}</span>
+                            <span class="text-muted fw-bold input-group">{{selected.precio |currency}}</span>
+                            <div class="input-group input-group-sm mb-3">
+                            <span class="input-group-text text-info">Cant</span> 
+                             <input type="number" class="form-control" formControlName="quantity_{{selected.id}}" [(ngModel)]="selected.quantity"></div>
+                         <span> <button (click)="removeMaterial(selected)"
+                                class="btn btn-danger btn-sm ml-2 input-group float-end col">Remove</button></span> </li>
+                        </ul>
                     </div>
                     <div *ngIf="selectedMaterials.length > 0" class="alert alert-success text-center">
-                        Sub-Total Price Materiales: <span class="font-weight-bold">{{updateTotal() |currency}}</span>
+                        Sub-Total Price Materiales: <span class="fw-bold">{{updateTotal() |currency}}</span>
                     </div>
                 </div>
             </div>
@@ -88,14 +94,14 @@
 
                     <div class="card" *ngIf="trabajadores.length > 0">
 
-                        <div class="card-header text-center text-info font-weight-bold">
+                        <div class="card-header text-center text-info fw-bold">
                             Trabajadores disponibles <span class="badge rounded-pill bg-warning">{{trabajadores.length}}</span>
                         </div>
 
                         <ul class="list-group list-group-item" *ngFor="let trabajador of trabajadores">
                             <li class="list-group-item row-cols" (click)="selectTrabajador(trabajador)">
-                                <span class="card-title">{{trabajador.nombre }} {{trabajador.apellidos }} 
-                                    <i class="fas fa-plus-circle fa-lg text-info float-right"></i>
+                                <span class="card-title fw-bold">{{trabajador.nombre }} {{trabajador.apellidos }} 
+                                    <i class="fas fa-plus-circle fa-lg text-info float-end"></i>
                                 </span>
                             </li>
                         </ul>
@@ -105,39 +111,37 @@
 
                 <div class="col-6" *ngIf="selectedTrabajadores.length > 0">
                     <div class="card">
-                        <div class="card-header text-center text-info font-weight-bold">
+                        <div class="card-header text-center text-info fw-bold">
                             Trabajadores seleccionados <span class="badge rounded-pill bg-success">{{selectedTrabajadores.length}}</span>
                         </div>
-                        <div class="list-group" *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
-                            <div class="list-group-item font-weight-bold">
-                                <div class="input-group mb-3 ">
-                                    <span (click)="unselectTrabajador(selectedTrabajador)">
-                                        <i class="fas fa-minus-circle fa-lg text-danger m-2"></i>{{
-                                        selectedTrabajador.nombre }} {{selectedTrabajador.apellidos }}</span>
-                                </div>
-                                <div class="input-group  mb-3 ">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="horas">horas</span>
-                                    </div>
-                                    <input id="horas" formControlName="horas" type="number" placeholder="C/horas"
+                        <div *ngFor="let selectedTrabajador of selectedTrabajadores; let i = index">
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">                             
+                                    <div class="input-group col fw-bold text-info" (click)="unselectTrabajador(selectedTrabajador)">
+                                        <span><i class="fas fa-minus-circle fa-lg text-danger m-2"></i></span>{{
+                                        selectedTrabajador.nombre }} {{selectedTrabajador.apellidos }}</div>
+                      
+                                <div class="input-group col">  
+                                    <span class="input-group-text text-info">Horas</span>  
+                                        <input class="col-3 form-control" formControlName="horas" type="number" placeholder="C/horas" 
                                         [formControl]="selectedTrabajadores[i].form.get('horas')"
                                         (input)="updateSubtotal(selectedTrabajador)">
+                                                                   
+                                    
                                 </div>
-                                <div class="input-group  mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="precioHora">Precio Hora </span>
-                                    </div>
-                                    <input formControlName="precioHora" type="number" id="precioHora"
+                                <div class="input-group col"> 
+                                    <span class="input-group-text text-info">$/Hora</span>                                   
+                                    <input formControlName="precioHora" type="number" class="col-3 form-control"
                                         [formControl]="selectedTrabajadores[i].form.get('precioHora')"
                                         (input)="updateSubtotal(selectedTrabajador) " placeholder="$/hora">
                                 </div>
-                                <hr>
-                                <div>Subtotal: {{ selectedTrabajador.subtotal | currency}}</div>
-                            </div>
+                              
+                                <div class="input-group col fw-bold text-muted form-control">Subtotal: {{ selectedTrabajador.subtotal | currency}}</div></li>
+                            </ul>
                         </div>
                     </div>
                     <div *ngIf="selectedTrabajadores.length > 0" class="alert alert-success text-center">
-                        Sub-Total Trabajadores: <span class="font-weight-bold"> {{totalT | currency}}</span>
+                        Sub-Total Trabajadores: <span class="fw-bold"> {{totalT | currency}}</span>
                     </div>
                 </div>
 

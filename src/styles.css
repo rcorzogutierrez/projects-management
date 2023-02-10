@@ -9,3 +9,10 @@ html,body{
    background-size: cover;
    height: 100%;
 }
+.form-floating{
+   text-align: start;
+}
+
+.errorLabel{
+   margin-left: 5px;
+}

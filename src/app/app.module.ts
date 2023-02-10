@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
@@ -27,6 +28,8 @@ import { CreateProyectosComponent } from './components/proyectos/create-proyecto
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { FirebaseErrorService } from './services/firebase-error.service';
 
 
 @NgModule({
@@ -43,7 +46,8 @@ import { RecuperarPasswordComponent } from './components/recuperar-password/recu
     CreateProyectosComponent,
     LoginComponent,
     DashboardComponent,
-    RecuperarPasswordComponent
+    RecuperarPasswordComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -51,11 +55,12 @@ import { RecuperarPasswordComponent } from './components/recuperar-password/recu
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
+    AngularFireAuthModule,
     ReactiveFormsModule,
     FormsModule,
     ToastrModule.forRoot(),
   ],
-  providers: [MaterialesService,TrabajadoresService],
+  providers: [MaterialesService,TrabajadoresService,FirebaseErrorService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

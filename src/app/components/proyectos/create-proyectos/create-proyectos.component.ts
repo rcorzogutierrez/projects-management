@@ -26,11 +26,13 @@ export class CreateProyectosComponent implements OnInit {
   total: number = 0;
   totalT: number = 0;
   totalP: number = 0;
+  private selectedMaterialQuantities = new Map<number, FormControl>();
 
   constructor(
     private _clienteService: ClientesService,
     private _materialesService: MaterialesService,
     private _trabajadoresService: TrabajadoresService,
+    
   ) {
     this.form = new FormGroup({
       clientSelect: new FormControl(''),
@@ -75,10 +77,10 @@ export class CreateProyectosComponent implements OnInit {
 
   onSelected(value:string): void {
 		this.clientSelect= value;
-    console.log(this.clientSelect.length)
+
 	}
 
-  addMaterial(material: Materiales) {
+ addMaterial(material: Materiales) {
     if (material && material.id) {
       let selectedMaterial = this.selectedMaterials.find(m => m.id === material.id);
       let initialQuantity = 1;
@@ -95,21 +97,24 @@ export class CreateProyectosComponent implements OnInit {
       });
       this.totalProyecto()
     }
-  }
+  } 
 
-  removeMaterial(material: Materiales) {
+ 
+
+ removeMaterial(material: Materiales) {
     this.selectedMaterials = this.selectedMaterials.filter(
       selected => selected.id !== material.id
     );
-  }
-
-  updateTotal() {
+  } 
+ updateTotal() {
     let total = 0;
     this.selectedMaterials.forEach(material => {
       total += material.precio * material.quantity;
     });
     return total;
-  }
+  } 
+
+  
 
   selectTrabajador(trabajador: any) {
     this.selectedTrabajadores.push(trabajador);
