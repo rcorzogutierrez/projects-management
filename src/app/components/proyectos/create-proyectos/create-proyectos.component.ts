@@ -163,6 +163,8 @@ export class CreateProyectosComponent implements OnInit {
   totalProyecto() {
     this.totalP = this.updateTotal() + this.totalT;
   } 
+
+  submitForm(){}
 }
 
 
