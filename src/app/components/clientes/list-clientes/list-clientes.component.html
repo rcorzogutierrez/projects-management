@@ -1,9 +1,10 @@
 <div class="container mt-5">
   <div *ngIf='displayc == true' class="card" >
     <div class="card-body">
-      <span class="hr">Lista de Clientes</span>
+      <figure class="text-center">
+        <div class="mt-3"> <h1 class="display-6 text-primary">Lista de Clientes</h1></div></figure>
       <button
-        class="btn btn-primary btn-lg float-end"
+        class="btn btn-primary btn-lg float-end mb-2"
         routerLink="/create-clientes"
       >
         Agregar
@@ -33,15 +34,15 @@
             <td>{{ cliente.salario | currency }}</td>
             <td>
               <i
-                class="fas fa-edit fa-lg text-info mr-2"
+                class="fas fa-edit fa-lg text-info me-2"
                 [routerLink]="['/edit-cliente/', cliente.id]"
               ></i>
               <i
                 (click)="eliminarCliente(cliente.id)"
-                class="fas fa-trash-alt fa-lg text-danger mr-2"
+                class="fas fa-trash-alt fa-lg text-danger me-2"
               ></i>
               <i
-                class="fas fa-plus fa-lg text-success"
+                class="fas fa-plus fa-lg text-success me-2"
                 (click)="getProyectos(cliente.id, cliente.nombre)"
               ></i>
             </td>
@@ -51,10 +52,12 @@
   
     </div>
   </div>
-  <div class="card" *ngIf="projects.length > 0">
+  <div class="card mt-5" *ngIf="projects.length > 0">
    
    <div class="card-body" *ngIf='displayp == true'>
-      <span class="hr">Lista de Proyectos de {{cliente}}</span>
+    <figure class="text-center">
+      <div class="mt-3"> <h1 class="display-6 text-primary">Lista de Proyectos de {{cliente}}</h1></div></figure>
+    
       <button
       class="btn btn-primary btn-lg float-right" (click)="reloadCurrentPage()">
       Atras
@@ -69,6 +72,7 @@
             <th>Nombre</th>
             <th>Direccion</th>
             <th>precio</th>
+            <th>Accion</th>
           </tr>
         </thead>
         <tbody>

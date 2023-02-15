@@ -4,7 +4,10 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaterialesService } from '../../../services/materiales.service';
 import { TrabajadoresService } from '../../../services/trabajadores.service';
 import { Materiales } from '../../../interfaces/materiales';
-import { ProyectosService } from 'src/app/services/proyectos.service';
+import { ProyectosService } from '../../../services/proyectos.service';
+import { ToastrService } from 'ngx-toastr';
+import { FirebaseErrorService } from '../../../services/firebase-error.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-proyectos',
@@ -27,27 +30,36 @@ export class CreateProyectosComponent implements OnInit {
   total: number = 0;
   totalT: number = 0;
   totalP: number = 0;
- 
+  startDate: Date  = new Date();
+  endDate: Date  = new Date();
+  
+
 
   constructor(
     private _proyectosServices: ProyectosService,
+    private router: Router,
     private _clienteService: ClientesService,
     private _materialesService: MaterialesService,
     private _trabajadoresService: TrabajadoresService,
-    
+    private toastr: ToastrService,
+    private firebaseError: FirebaseErrorService
+
   ) {
     this.form = new FormGroup({
       clientSelect: new FormControl(''),
-      clientType:new FormControl(''),
-      projecType:new FormControl(''),
+      clientType: new FormControl(''),
+      projecType: new FormControl(''),
       materials: new FormArray([]),
-      trabajadorP:new FormArray([]),
+      trabajadorP: new FormArray([]),
       //name: new FormControl(''),
       price: new FormControl(''),
       quantity: new FormControl(''),
       horas: new FormControl(),
+      startDate: new FormControl(),
+    endDate: new FormControl(),
       precioHora: new FormControl()
     });
+   
   }
 
   ngOnInit() {
@@ -76,15 +88,17 @@ export class CreateProyectosComponent implements OnInit {
         };
       });
     });
+
+    this.startDate = new Date();
+    this.endDate = new Date();
   }
 
-  onSelected(value:string): void {
-		this.clientSelect= value;
 
-	}
 
-  limpiarForm(){
-    this.form.reset(); 
+ 
+
+  limpiarForm() {
+    this.form.reset();
     this.selectedMaterials = [];
     this.selectedTrabajadores = [];
     this.totalP = 0;
@@ -93,6 +107,12 @@ export class CreateProyectosComponent implements OnInit {
   submitForm() {
     if (this.form.valid) {
       const proyecto = {
+        totalProyecto: this.totalP,
+        subTotalMat: this.updateSubTotalMat(),
+        fechaCreacion: new Date(),
+        fechaactualizacion: new Date(),
+        fechaInicio: this.form.get('startDate')?.value,
+        fechaFin: this.form.get('endDate')?.value,
         clientSelect: this.form.get('clientSelect')?.value,
         clientType: this.form.get('clientType')?.value,
         projecType: this.form.get('projecType')?.value,
@@ -104,17 +124,21 @@ export class CreateProyectosComponent implements OnInit {
           subtotal: trabajador.subtotal
         }))
       };
-      
+
       const idCliente = proyecto.clientSelect;
       this._proyectosServices.createProject(proyecto, idCliente).then(() => {
+        this.toastr.info('Se ha guardado exitosamente el proyecto', 'Proyecto Guardado')
         this.form.reset();
         this.limpiarForm();
+        this.router.navigate(['/list-clientes']);
+      }).catch((error) => {
+        this.toastr.error(this.firebaseError.codeError(error.code), 'Error')
       });
     }
-   
+
   }
 
- addMaterial(material: Materiales) {
+  addMaterial(material: Materiales) {
     if (material && material.id) {
       let selectedMaterial = this.selectedMaterials.find(m => m.id === material.id);
       let initialQuantity = 1;
@@ -127,24 +151,24 @@ export class CreateProyectosComponent implements OnInit {
       }
       this.form.addControl(`quantity_${material.id}`, new FormControl(initialQuantity));
       this.form.get(`quantity_${material.id}`)?.valueChanges.subscribe(quantity => {
-        this.updateTotal();
+        this.updateSubTotalMat();
       });
       this.totalProyecto()
     }
-  } 
+  }
 
- removeMaterial(material: Materiales) {
+  removeMaterial(material: Materiales) {
     this.selectedMaterials = this.selectedMaterials.filter(
       selected => selected.id !== material.id
     );
-  } 
- updateTotal() {
+  }
+  updateSubTotalMat() {
     let total = 0;
     this.selectedMaterials.forEach(material => {
       total += material.precio * material.quantity;
     });
     return total;
-  } 
+  }
 
   selectTrabajador(trabajador: any) {
     this.selectedTrabajadores.push(trabajador);
@@ -161,7 +185,7 @@ export class CreateProyectosComponent implements OnInit {
     });
     this.selectedTrabajadoresForms.push(form);
     this.trabajadores = this.trabajadores.filter(m => m !== trabajador);
-  
+
     // Create a new object with the form values and push it to Firebase
     const trabajadorData = {
       horas: 0,
@@ -201,10 +225,10 @@ export class CreateProyectosComponent implements OnInit {
   }
 
   totalProyecto() {
-    this.totalP = this.updateTotal() + this.totalT;
-  } 
+    this.totalP = this.updateSubTotalMat() + this.totalT;
+  }
 
- 
+
 }
 
 
