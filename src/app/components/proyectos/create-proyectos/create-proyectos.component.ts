@@ -4,6 +4,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaterialesService } from '../../../services/materiales.service';
 import { TrabajadoresService } from '../../../services/trabajadores.service';
 import { Materiales } from '../../../interfaces/materiales';
+import { ProyectosService } from 'src/app/services/proyectos.service';
 
 @Component({
   selector: 'app-create-proyectos',
@@ -17,7 +18,7 @@ export class CreateProyectosComponent implements OnInit {
   materials: Materiales[] = [];
   trabajadores: any[] = [];
   selectedTrabajadores: any[] = [];
-  selectedMaterial: Materiales | null = null;
+  //selectedMaterial: Materiales | null = null;
   selectedMaterials: Materiales[] = [];
   horas: any = 0;
   precioHora: any = 0;
@@ -26,9 +27,10 @@ export class CreateProyectosComponent implements OnInit {
   total: number = 0;
   totalT: number = 0;
   totalP: number = 0;
-  private selectedMaterialQuantities = new Map<number, FormControl>();
+ 
 
   constructor(
+    private _proyectosServices: ProyectosService,
     private _clienteService: ClientesService,
     private _materialesService: MaterialesService,
     private _trabajadoresService: TrabajadoresService,
@@ -39,7 +41,8 @@ export class CreateProyectosComponent implements OnInit {
       clientType:new FormControl(''),
       projecType:new FormControl(''),
       materials: new FormArray([]),
-      name: new FormControl(''),
+      trabajadorP:new FormArray([]),
+      //name: new FormControl(''),
       price: new FormControl(''),
       quantity: new FormControl(''),
       horas: new FormControl(),
@@ -80,6 +83,37 @@ export class CreateProyectosComponent implements OnInit {
 
 	}
 
+  limpiarForm(){
+    this.form.reset(); 
+    this.selectedMaterials = [];
+    this.selectedTrabajadores = [];
+    this.totalP = 0;
+  }
+
+  submitForm() {
+    if (this.form.valid) {
+      const proyecto = {
+        clientSelect: this.form.get('clientSelect')?.value,
+        clientType: this.form.get('clientType')?.value,
+        projecType: this.form.get('projecType')?.value,
+        materials: this.selectedMaterials.map(material => material.id), // Solo se guardan los IDs de los materiales seleccionados
+        trabajadores: this.selectedTrabajadores.map(trabajador => ({
+          id: trabajador.id,
+          horas: trabajador.horas,
+          precioHora: trabajador.precioHora,
+          subtotal: trabajador.subtotal
+        }))
+      };
+      
+      const idCliente = proyecto.clientSelect;
+      this._proyectosServices.createProject(proyecto, idCliente).then(() => {
+        this.form.reset();
+        this.limpiarForm();
+      });
+    }
+   
+  }
+
  addMaterial(material: Materiales) {
     if (material && material.id) {
       let selectedMaterial = this.selectedMaterials.find(m => m.id === material.id);
@@ -99,8 +133,6 @@ export class CreateProyectosComponent implements OnInit {
     }
   } 
 
- 
-
  removeMaterial(material: Materiales) {
     this.selectedMaterials = this.selectedMaterials.filter(
       selected => selected.id !== material.id
@@ -113,8 +145,6 @@ export class CreateProyectosComponent implements OnInit {
     });
     return total;
   } 
-
-  
 
   selectTrabajador(trabajador: any) {
     this.selectedTrabajadores.push(trabajador);
@@ -131,6 +161,16 @@ export class CreateProyectosComponent implements OnInit {
     });
     this.selectedTrabajadoresForms.push(form);
     this.trabajadores = this.trabajadores.filter(m => m !== trabajador);
+  
+    // Create a new object with the form values and push it to Firebase
+    const trabajadorData = {
+      horas: 0,
+      precioHora: 0,
+      subtotal: 0,
+      nombre: trabajador.nombre,
+      apellidos: trabajador.apellidos
+    };
+    //this.firestore.collection('trabajadores').add(trabajadorData);
   }
 
   unselectTrabajador(trabajador: any) {
@@ -155,7 +195,7 @@ export class CreateProyectosComponent implements OnInit {
     selectedTrabajador.horas = selectedTrabajador.form.get('horas').value;
     selectedTrabajador.precioHora = selectedTrabajador.form.get('precioHora').value;
     selectedTrabajador.subtotal = selectedTrabajador.horas * selectedTrabajador.precioHora;
-    console.log(selectedTrabajador.horas)
+    //console.log(selectedTrabajador.horas)
     this.calcularTotal();
     this.totalProyecto()
   }
@@ -164,7 +204,7 @@ export class CreateProyectosComponent implements OnInit {
     this.totalP = this.updateTotal() + this.totalT;
   } 
 
-  submitForm(){}
+ 
 }
 
 

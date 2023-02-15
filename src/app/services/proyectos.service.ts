@@ -8,8 +8,8 @@ export class ProyectosService {
 
   constructor(private firestore: AngularFirestore) { }
 
-  createProject(data:any,id: string) {
-    return this.firestore.collection('clientes').doc(id)
-    .collection('proyectos').add(data);
+  createProject(proyecto: any, idcliente: string) {
+    const projectRef = this.firestore.collection('clientes').doc(idcliente).collection('proyectos');
+    return projectRef.add(proyecto);
   }
 }
