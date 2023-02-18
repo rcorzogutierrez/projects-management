@@ -41,7 +41,30 @@
                     <option value="Servicio"> Servicio</option>
                 </select>
             </div>
+       
+        <div class="pt-4 col right-section input-group mb-3" *ngIf="clientSelect.value && form.get('projecType')?.value === 'Nueva construccion'">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="faseSelect">Fase</label>
+            </div>
+            <select formControlName="faseSelect" class="form-control form-select" id="faseSelect">
+                <option value="" disabled>Select an Option</option>
+                <option value="Underground"> Underground</option>
+                <option value="Tubset"> Tubset</option>
+                <option value="Trim"> Trim</option>
+            </select>
         </div>
+        <div class="pt-4 col right-section input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="categoria">Categoría</label>
+              </div>
+            <select class="form-control form-select" formControlName="categoria" (change)="onCategoriaChange()">
+              <option value="platinum">Platinum</option>
+              <option value="gold">Gold</option>
+              <option value="silver">Silver</option>
+            </select>
+          </div>
+    
+    </div>
         <div class="row">
             <div class="col-md-6">
               <div class="input-group mb-3">
@@ -106,7 +129,10 @@
                     <div *ngIf="selectedMaterials.length > 0" class="alert alert-success text-center">
                         Sub-Total Price Materiales: <span class="fw-bold">{{updateSubTotalMat() |currency}}</span>
                     </div>
+
+                  
                 </div>
+
             </div>
 
             <div class="row pt-5">
@@ -151,7 +177,7 @@
                                         <span class="input-group-text text-info">Horas</span>
                                         <input class="col-3 form-control" type="number" placeholder="C/horas"
                                             [formControl]="selectedTrabajadores[i].form.get('horas')"
-                                            (input)="updateSubtotal(selectedTrabajador)">
+                                            (input)="updateSubtotalTrab(selectedTrabajador)">
 
 
                                     </div>
@@ -159,7 +185,7 @@
                                         <span class="input-group-text text-info">$/Hora</span>
                                         <input type="number" class="col-3 form-control"
                                             [formControl]="selectedTrabajadores[i].form.get('precioHora')"
-                                            (input)="updateSubtotal(selectedTrabajador) " placeholder="$/hora">
+                                            (input)="updateSubtotalTrab(selectedTrabajador) " placeholder="$/hora">
                                     </div>
 
                                     <div class="input-group col fw-bold text-muted form-control">Subtotal: {{
@@ -175,9 +201,9 @@
 
             </div>
         </div>
-        <div class="mt-3 d-grid gap-2 d-md-block" *ngIf="totalP > 0">
+        <div class="mt-3 d-grid gap-2 d-md-block" >
 
-            <button type="submit" class="btn btn-outline-success btn-lg me-md-2">Agregar</button>
+            <button type="submit" class="btn btn-outline-success btn-lg me-md-2" *ngIf="totalP > 0">Agregar</button>
             <button type="button" class="btn btn-outline-danger btn-lg ml-2" (click)="limpiarForm()">Limpiar</button>
         </div>
 
