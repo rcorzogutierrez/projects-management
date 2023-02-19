@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ClientesService } from '../../../services/clientes.service';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MaterialesService } from '../../../services/materiales.service';
 import { TrabajadoresService } from '../../../services/trabajadores.service';
 import { Materiales } from '../../../interfaces/materiales';
@@ -8,6 +8,7 @@ import { ProyectosService } from '../../../services/proyectos.service';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../../services/firebase-error.service';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-create-proyectos',
@@ -19,10 +20,12 @@ export class CreateProyectosComponent implements OnInit {
   clients: any[] = [];
   clientSelect: any[] = [];
   materials: Materiales[] = [];
+  selectedMaterials: { id: number, nombre: string, precio: number, cantidad: number, formGroup: FormGroup }[] = [];
+
   trabajadores: any[] = [];
   selectedTrabajadores: any[] = [];
   //selectedMaterial: Materiales | null = null;
-  selectedMaterials: Materiales[] = [];
+  //selectedMaterials: Materiales[] = [];
   horas: any = 0;
   precioHora: any = 0;
   selectedTrabajadoresForms: FormGroup[] = [];
@@ -30,12 +33,12 @@ export class CreateProyectosComponent implements OnInit {
   totalM: number = 0;
   totalT: number = 0;
   totalP: number = 0;
+  total: number = 0;
   MatPorcentaje: number = 0;
   startDate: Date  = new Date();
   endDate: Date  = new Date();
-  subTotalMat = 0;
- 
-  
+  subTotalMat = 0;  
+  selectedMaterials$ = new BehaviorSubject<any[]>([]);
 
 
   constructor(
@@ -46,30 +49,30 @@ export class CreateProyectosComponent implements OnInit {
     private _trabajadoresService: TrabajadoresService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private firebaseError: FirebaseErrorService
+    private firebaseError: FirebaseErrorService,
+    private changeDetectorRef: ChangeDetectorRef
 
   ) {
-    this.form = new FormGroup({
-      clientSelect: new FormControl(''),
-      clientType: new FormControl(''),
-      projecType: new FormControl(''),
-      materials: new FormArray([]),
-      trabajadorP: new FormArray([]),
-      //name: new FormControl(''),
-      price: new FormControl(''),
-      quantity: new FormControl(''),
-      horas: new FormControl(),
-      startDate: new FormControl(),
-    endDate: new FormControl(),
-      precioHora: new FormControl(),
-      faseSelect: new FormControl(),
-      categoria: new FormControl(),
+    this.form = this.formBuilder.group<{[key: string]: AbstractControl}>({
+      clientSelect: this.formBuilder.control(''),
+      clientType: this.formBuilder.control(''),
+      projecType: this.formBuilder.control(''),
+      materials: this.formBuilder.array([]),
+      trabajadorP: this.formBuilder.array([]),
+      horas: this.formBuilder.control(''),
+      startDate: this.formBuilder.control(''),
+      endDate: this.formBuilder.control(''),
+      precioHora: this.formBuilder.control(''),
+      faseSelect: this.formBuilder.control(''),
+      categoria: this.formBuilder.control(''),
     });
+    
    
   }
 
   ngOnInit(): void {
     this.clients = [];
+    this._materialesService.getMateriales().subscribe(materiales => this.materials = materiales);
     this._clienteService.getClientes().subscribe(data => {
       this.clients = data.map((element: any) => {
         return {
@@ -161,25 +164,7 @@ export class CreateProyectosComponent implements OnInit {
 
   }
 
-  addMaterial(material: Materiales) {
-    if (material && material.id) {
-      let selectedMaterial = this.selectedMaterials.find(m => m.id === material.id);
-      let initialQuantity = 1;
-      if (!selectedMaterial) {
-        this.selectedMaterials.push({ ...material, quantity: 1 });
-        selectedMaterial = this.selectedMaterials[this.selectedMaterials.length - 1];
-      } else {
-        initialQuantity = selectedMaterial.quantity;
-        selectedMaterial.quantity += 1;
-      }
-      this.form.addControl(`quantity_${material.id}`, new FormControl(initialQuantity));
-      this.form.get(`quantity_${material.id}`)?.valueChanges.subscribe(quantity => {
-        this.updateSubTotalMat();
-       // this.totalProyecto();
-      });
-      
-    }
-  }
+
 
   selectTrabajador(trabajador: any) {
     this.selectedTrabajadores.push(trabajador);
@@ -219,47 +204,88 @@ export class CreateProyectosComponent implements OnInit {
   }
 
   calcularTrabajador() {
-    this.totalT = 0;
+    let totalTrabajador = 0;
     this.selectedTrabajadores.forEach(trabajador => {
-      this.totalT += trabajador.subtotal;
+      totalTrabajador += trabajador.subtotal;
     });
+    return totalTrabajador;
   }
 
-  removeMaterial(material: Materiales) {
-    this.selectedMaterials = this.selectedMaterials.filter(
-      selected => selected.id !== material.id
-    );
+  addMaterial(material: Materiales) {
+    if (material && material.id) {
+      let selectedMaterial = this.selectedMaterials.find(m => m.id === material.id);
+      if (!selectedMaterial) {
+        const formGroup = new FormGroup({
+          quantity: new FormControl(1)
+        });
+        selectedMaterial = { id: material.id, nombre: material.nombre, precio: material.precio, cantidad: 1, formGroup };
+        this.selectedMaterials.push(selectedMaterial);
+        formGroup.get('quantity')?.valueChanges.subscribe(() => {
+          this.totalM = this.updateSubTotalMat();
+        });
+      } else {
+        selectedMaterial.cantidad += 1;
+        selectedMaterial.formGroup.get('quantity')?.setValue(selectedMaterial.cantidad);
+      }
+      this.totalM = this.updateSubTotalMat();
+      this.changeDetectorRef.detectChanges();
+    }
   }
 
+  removeMaterial(material: { id: number, nombre: string, precio: number, cantidad: number, formGroup: FormGroup }) {
+    let index = this.selectedMaterials.findIndex(m => m.id === material.id);
+    if (index !== -1) {
+      this.selectedMaterials.splice(index, 1);
+      this.totalM = this.updateSubTotalMat(); // Actualiza el valor de totalM después de eliminar el material
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+  
   updateSubTotalMat() {
-    let totalM = 0;   
+    let totalM = 0;
     this.selectedMaterials.forEach(material => {
-      totalM += material.precio * material.quantity;           
-    }); 
-    this.totalM =totalM; 
+      totalM += material.precio * material.formGroup.get('quantity')?.value;
+    });
+    this.totalM = totalM;
+    this.total = this.totalM + this.totalT;
     return totalM;
-    
   }
-
+  
+  calcularSubtotalGeneral() {
+    let subtotalMateriales = this.updateSubTotalMat();
+    let subtotalTrabajadores = this.totalT;
+    return subtotalMateriales + subtotalTrabajadores;
+  } 
+  
+  
   updateSubtotalTrab(selectedTrabajador: any) {
     selectedTrabajador.horas = selectedTrabajador.form.get('horas').value;
     selectedTrabajador.precioHora = selectedTrabajador.form.get('precioHora').value;
     selectedTrabajador.subtotal = selectedTrabajador.horas * selectedTrabajador.precioHora;
-    //console.log(selectedTrabajador.horas)
-    this.calcularTrabajador();
-    this.totalProyecto()
+    this.totalT = this.calcularTrabajador();
+    this.total = this.totalM + this.totalT;
   }
 
-  matSubtotalPlusPorcentaje(){
+  updateMaterialQuantity(material: { id: number, nombre: string, precio: number, cantidad: number, formGroup: FormGroup }, event: any) {
+    material.cantidad = event.target.value;
+    material.formGroup.get('cantidad')?.setValue(material.cantidad);
+    this.updateSubTotalMat(); // Actualiza el subtotal después de modificar la cantidad
+  }
+  
+  
+
+/*   matSubtotalPlusPorcentaje(){
     let valorComercial = this.updateSubTotalMat() * (1 + this.onCategoriaChange() / 100);
     return valorComercial  
     
-  }
+  } */
 
-  totalProyecto() {
+  /* totalProyecto() {
     this.totalP = this.totalM + this.totalT;
     this.MatPorcentaje = this.matSubtotalPlusPorcentaje()
-  }
+  } */
+
+
 
 
 }

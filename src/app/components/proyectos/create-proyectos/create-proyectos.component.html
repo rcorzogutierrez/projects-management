@@ -79,6 +79,11 @@
               </div>
             </div>
           </div>
+
+          <div *ngIf="selectedMaterials.length > 0 || selectedTrabajadores.length > 0" class="alert alert-success text-center">
+            Sub-Total: <span class="fw-bold">{{calcularSubtotalGeneral() | currency}}</span>
+          </div>
+          
     
 
         <div *ngIf="totalP > 0 && clientSelect.value" class="alert alert-success text-center">
@@ -111,26 +116,25 @@
                             Materiales seleccionados
                         </div>
                     </div>
-                    <div *ngFor="let selected of selectedMaterials" class="card">
+                    <div *ngFor="let selected of selectedMaterials" class="card" [formGroup]="selected.formGroup">
                         <ul class="list-group">
-                            <li class="list-group-item d-flex  align-items-start ">
-                                <span class="fw-bold text-info input-group">{{selected.nombre}}</span>
-                                <span class="text-muted fw-bold input-group">{{selected.precio |currency}}</span>
-                                <div class="input-group input-group-sm mb-3">
-                                    <span class="input-group-text text-info">Cant</span>
-                                    <input type="number" class="form-control" formControlName="quantity_{{selected.id}}"
-                                        [(ngModel)]="selected.quantity">
-                                </div>
-                                <span> <button (click)="removeMaterial(selected)"
-                                        class="btn btn-danger btn-sm ml-2 input-group float-end col">Remove</button></span>
-                            </li>
+                          <li class="list-group-item d-flex  align-items-start ">
+                            <span class="fw-bold text-info input-group">{{selected.nombre}}</span>
+                            <span class="text-muted fw-bold input-group">{{selected.precio | currency}}</span>
+                            <div class="input-group input-group-sm mb-3">
+                              <span class="input-group-text text-info">Cant</span>
+                              <input type="number" class="form-control" formControlName="quantity">
+                            </div>                          
+                            <span> <button (click)="removeMaterial(selected)" class="btn btn-danger btn-sm ml-2 input-group float-end col">Remove</button></span>
+                          </li>
                         </ul>
-                    </div>
+                      </div>
+                      
+                      
+                      
                     <div *ngIf="selectedMaterials.length > 0" class="alert alert-success text-center">
                         Sub-Total Price Materiales: <span class="fw-bold">{{updateSubTotalMat() |currency}}</span>
-                    </div>
-
-                  
+                    </div>                  
                 </div>
 
             </div>
