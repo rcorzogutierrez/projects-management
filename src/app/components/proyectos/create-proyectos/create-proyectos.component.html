@@ -14,7 +14,7 @@
                 </div>
                 <select formControlName="clientSelect" class="form-control form-select" id="clientSelect" #clientSelect
                     >
-                    <option value="" disabled>Select an Option</option>
+                    <option value="" disabled selected>Select an Option</option>
                     <option *ngFor="let client of clients" [value]="client.id">
                         {{client.nombre}} {{client.apellidos}}
                     </option>
@@ -53,11 +53,11 @@
                 <option value="Trim"> Trim</option>
             </select>
         </div>
-        <div class="pt-4 col right-section input-group mb-3">
+        <div class="pt-4 col right-section input-group mb-3" *ngIf="clientSelect.value">
             <div class="input-group-prepend">
                 <label class="input-group-text" for="categoria">Categoría</label>
               </div>
-            <select class="form-control form-select" formControlName="categoria" (change)="onCategoriaChange()">
+            <select class="form-control form-select" formControlName="categoria" id="categoria" (change)="onCategoriaChange()">
                 <option value="" disabled>Select an Option</option>
               <option value="platinum">Platinum</option>
               <option value="gold">Gold</option>
@@ -84,10 +84,6 @@
           <div *ngIf="selectedMaterials.length > 0 || selectedTrabajadores.length > 0" class="alert alert-success text-center">
             Total Proyecto: <span class="fw-bold">{{calcularSubtotalGeneral() | currency}}</span>
           </div>
-          
-    
-
-      
 
         <div *ngIf="clientSelect.value">
             <div class="row pt-3">
@@ -129,17 +125,11 @@
                         </ul>
                       </div>
                       
-                      
-                      
                     <div *ngIf="selectedMaterials.length > 0" class="alert alert-success text-center">
-                        Sub-Total Price Materiales: <span class="fw-bold">{{updateSubTotalMat() |currency}}</span>
-                    </div>      
-                    
-                  <div *ngIf="porcentaje && subTotalMat > 0" class="pt-2">
-  <p>Subtotal de materiales con {{ porcentaje }}% de descuento: {{ (subTotalMat | currency) || 0 }}</p>
-</div>
+                        <p>Sub-Total Materiales: <span class="fw-bold">{{updateSubTotalMat() |currency}}</span></p>
+                        <p *ngIf="porcentaje && subTotalMat > 0">Subtotal de materiales con <span class="fw-bold">{{ porcentaje }}%</span> de incremento: <span class="fw-bold">{{ (subTotalMat | currency) || 0 }}</span></p>
+                    </div>           
                 </div>
-
             </div>
 
             <div class="row pt-5">
@@ -147,14 +137,11 @@
                     <div *ngIf="trabajadores.length <= 0" class="alert alert-success text-center">
                         <span class="font-weight-bold">No hay trabajadores Disponibles</span>
                     </div>
-
                     <div class="card" *ngIf="trabajadores.length > 0">
-
                         <div class="card-header text-center text-info fw-bold">
                             Trabajadores disponibles <span
                                 class="badge rounded-pill bg-warning">{{trabajadores.length}}</span>
                         </div>
-
                         <ul class="list-group list-group-item" *ngFor="let trabajador of trabajadores">
                             <li class="list-group-item row-cols" (click)="selectTrabajador(trabajador)">
                                 <span class="card-title fw-bold">{{trabajador.nombre }} {{trabajador.apellidos }}
@@ -185,7 +172,6 @@
                                         <input class="col-3 form-control" type="number" placeholder="C/horas"
                                             [formControl]="selectedTrabajadores[i].form.get('horas')"
                                             (input)="updateSubtotalTrab(selectedTrabajador)">
-
 
                                     </div>
                                     <div class="input-group col">

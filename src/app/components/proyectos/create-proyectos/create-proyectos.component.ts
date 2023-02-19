@@ -21,11 +21,8 @@ export class CreateProyectosComponent implements OnInit {
   clientSelect: any[] = [];
   materials: Materiales[] = [];
   selectedMaterials: { id: number, nombre: string, precio: number, cantidad: number, formGroup: FormGroup }[] = [];
-
   trabajadores: any[] = [];
   selectedTrabajadores: any[] = [];
-  //selectedMaterial: Materiales | null = null;
-  //selectedMaterials: Materiales[] = [];
   horas: any = 0;
   precioHora: any = 0;
   selectedTrabajadoresForms: FormGroup[] = [];
@@ -35,13 +32,12 @@ export class CreateProyectosComponent implements OnInit {
   totalP: number = 0;
   total: number = 0;
   MatPorcentaje: number = 0;
-  startDate: Date  = new Date();
-  endDate: Date  = new Date();
-  subTotalMat = 0;  
+  startDate: Date = new Date();
+  endDate: Date = new Date();
+  subTotalMat = 0;
   porcentaje = 0;
   selectedMaterials$ = new BehaviorSubject<any[]>([]);
   selectedCategory: string | null = null;
-
 
   constructor(
     private _proyectosServices: ProyectosService,
@@ -55,7 +51,7 @@ export class CreateProyectosComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef
 
   ) {
-    this.form = this.formBuilder.group<{[key: string]: AbstractControl}>({
+    this.form = this.formBuilder.group<{ [key: string]: AbstractControl }>({
       clientSelect: this.formBuilder.control(''),
       clientType: this.formBuilder.control(''),
       projecType: this.formBuilder.control(''),
@@ -100,18 +96,24 @@ export class CreateProyectosComponent implements OnInit {
     });
     this.startDate = new Date();
     this.endDate = new Date();
-  } 
+  }
 
   limpiarForm() {
-    this.form.reset();   
+    this.form.reset();
     this.selectedMaterials = [];
     this.selectedTrabajadores = [];
     this.totalP = 0;
+    this.porcentaje = 0;
+    this.form.get('clientSelect')?.setValue('');
+    this.form.get('clientType')?.setValue('');
+    this.form.get('projecType')?.setValue('');
+    this.form.get('faseSelect')?.setValue('');
+    this.form.get('categoria')?.setValue('');
   }
 
   onCategoriaChange() {
     const categoriaControl = this.form.get('categoria');
-    const categoria = categoriaControl?.value;    
+    const categoria = categoriaControl?.value;
     switch (categoria) {
       case 'platinum':
         this.porcentaje = 10;
@@ -135,6 +137,7 @@ export class CreateProyectosComponent implements OnInit {
       const proyecto = {
         totalProyecto: this.totalP,
         subTotalMat: this.updateSubTotalMat(),
+        subtotalTrabajadores: this.calcularTrabajador(),
         fechaCreacion: new Date(),
         fechaactualizacion: new Date(),
         fechaInicio: this.form.get('startDate')?.value,
@@ -142,7 +145,8 @@ export class CreateProyectosComponent implements OnInit {
         clientSelect: this.form.get('clientSelect')?.value,
         clientType: this.form.get('clientType')?.value,
         projecType: this.form.get('projecType')?.value,
-        faseSelect:this.form.get('faseSelect')?.value,
+        faseSelect: this.form.get('faseSelect')?.value,
+        categoria: this.form.get('categoria')?.value,
         materials: this.selectedMaterials.map(material => material.id), // Solo se guardan los IDs de los materiales seleccionados
         trabajadores: this.selectedTrabajadores.map(trabajador => ({
           id: trabajador.id,
@@ -184,7 +188,8 @@ export class CreateProyectosComponent implements OnInit {
       precioHora: 0,
       subtotal: 0,
       nombre: trabajador.nombre,
-      apellidos: trabajador.apellidos };  
+      apellidos: trabajador.apellidos
+    };
   }
 
   unselectTrabajador(trabajador: any) {
@@ -197,7 +202,7 @@ export class CreateProyectosComponent implements OnInit {
     this.selectedTrabajadores = this.selectedTrabajadores.filter(m => m !== trabajador);
     this.totalT = this.calcularTrabajador(); // recalcular el total de trabajadores seleccionados
     this.total = this.totalM + this.totalT;
-}
+  }
 
   calcularTrabajador() {
     let totalTrabajador = 0;
@@ -236,14 +241,14 @@ export class CreateProyectosComponent implements OnInit {
       this.changeDetectorRef.detectChanges();
     }
   }
-  
+
   updateSubTotalMat() {
-    let totalM = 0;   
+    let totalM = 0;
     this.selectedMaterials.forEach(material => {
       totalM += material.precio * material.formGroup.get('quantity')?.value;
     });
     this.totalM = totalM;
-    this.total = this.totalM + this.totalT;  
+    this.total = this.totalM + this.totalT;
     if (this.selectedCategory) {
       this.subTotalMat = this.totalM * (1 + this.porcentaje / 100);
     } else {
@@ -251,7 +256,7 @@ export class CreateProyectosComponent implements OnInit {
     }
     return totalM;
   }
-  
+
   calcularSubtotalGeneral() {
     let subtotalMateriales = this.updateSubTotalMat();
     let subtotalTrabajadores = this.totalT;
@@ -262,8 +267,7 @@ export class CreateProyectosComponent implements OnInit {
     this.totalP = subtotal;
     return subtotal;
   }
-   
-  
+
   updateSubtotalTrab(selectedTrabajador: any) {
     selectedTrabajador.horas = selectedTrabajador.form.get('horas').value;
     selectedTrabajador.precioHora = selectedTrabajador.form.get('precioHora').value;
@@ -271,19 +275,6 @@ export class CreateProyectosComponent implements OnInit {
     this.totalT = this.calcularTrabajador();
     this.total = this.totalM + this.totalT;
   }
-
-  updateMaterialQuantity(material: { id: number, nombre: string, precio: number, cantidad: number, formGroup: FormGroup }, event: any) {
-    material.cantidad = event.target.value;
-    material.formGroup.get('cantidad')?.setValue(material.cantidad);
-    this.updateSubTotalMat(); // Actualiza el subtotal después de modificar la cantidad
-  }
-  
-  
-
-
-
-
-
 }
 
 
