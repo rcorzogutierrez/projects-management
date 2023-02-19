@@ -200,8 +200,9 @@ export class CreateProyectosComponent implements OnInit {
     this.subtotalTrabajadores = this.subtotalTrabajadores.filter(m => m !== trabajador.subtotal);
     this.trabajadores.push(trabajador);
     this.selectedTrabajadores = this.selectedTrabajadores.filter(m => m !== trabajador);
-    this.calcularTrabajador();
-  }
+    this.totalT = this.calcularTrabajador(); // recalcular el total de trabajadores seleccionados
+    this.total = this.totalM + this.totalT;
+}
 
   calcularTrabajador() {
     let totalTrabajador = 0;
