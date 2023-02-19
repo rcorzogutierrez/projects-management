@@ -81,14 +81,12 @@
           </div>
 
           <div *ngIf="selectedMaterials.length > 0 || selectedTrabajadores.length > 0" class="alert alert-success text-center">
-            Sub-Total: <span class="fw-bold">{{calcularSubtotalGeneral() | currency}}</span>
+            Total Proyecto: <span class="fw-bold">{{calcularSubtotalGeneral() | currency}}</span>
           </div>
           
     
 
-        <div *ngIf="totalP > 0 && clientSelect.value" class="alert alert-success text-center">
-            Total Proyecto: <h5 class="fw-bold">{{totalP |currency}}</h5>
-        </div>
+      
 
         <div *ngIf="clientSelect.value">
             <div class="row pt-3">
@@ -207,7 +205,7 @@
         </div>
         <div class="mt-3 d-grid gap-2 d-md-block" >
 
-            <button type="submit" class="btn btn-outline-success btn-lg me-md-2" *ngIf="totalP > 0">Agregar</button>
+            <button type="submit" class="btn btn-outline-success btn-lg me-md-2" *ngIf="selectedMaterials.length > 0 || selectedTrabajadores.length > 0">Agregar</button>
             <button type="button" class="btn btn-outline-danger btn-lg ml-2" (click)="limpiarForm()">Limpiar</button>
         </div>
 

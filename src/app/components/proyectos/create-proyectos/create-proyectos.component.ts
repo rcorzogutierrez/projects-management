@@ -255,6 +255,7 @@ export class CreateProyectosComponent implements OnInit {
   calcularSubtotalGeneral() {
     let subtotalMateriales = this.updateSubTotalMat();
     let subtotalTrabajadores = this.totalT;
+    this.totalP = subtotalMateriales + subtotalTrabajadores
     return subtotalMateriales + subtotalTrabajadores;
   } 
   
