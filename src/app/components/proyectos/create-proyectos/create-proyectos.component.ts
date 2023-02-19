@@ -38,7 +38,9 @@ export class CreateProyectosComponent implements OnInit {
   startDate: Date  = new Date();
   endDate: Date  = new Date();
   subTotalMat = 0;  
+  porcentaje = 0;
   selectedMaterials$ = new BehaviorSubject<any[]>([]);
+  selectedCategory: string | null = null;
 
 
   constructor(
@@ -66,12 +68,11 @@ export class CreateProyectosComponent implements OnInit {
       faseSelect: this.formBuilder.control(''),
       categoria: this.formBuilder.control(''),
     });
-    
-   
   }
 
   ngOnInit(): void {
     this.clients = [];
+    this.onCategoriaChange();
     this._materialesService.getMateriales().subscribe(materiales => this.materials = materiales);
     this._clienteService.getClientes().subscribe(data => {
       this.clients = data.map((element: any) => {
@@ -109,25 +110,24 @@ export class CreateProyectosComponent implements OnInit {
   }
 
   onCategoriaChange() {
-   const categoriaControl = this.form.get('categoria');
+    const categoriaControl = this.form.get('categoria');
     const categoria = categoriaControl?.value;    
-    let porcentaje = 0;
     switch (categoria) {
       case 'platinum':
-        porcentaje = 10;
+        this.porcentaje = 10;
         break;
       case 'gold':
-        porcentaje = 5;
+        this.porcentaje = 5;
         break;
       case 'silver':
-        porcentaje = 2.5;
+        this.porcentaje = 2.5;
         break;
       default:
-        porcentaje = 0;
+        this.porcentaje = 0;
         break;
     }
-    //this.subTotalMat = this.updateSubTotalMat() * (1 + porcentaje / 100);  
-    return porcentaje
+    this.selectedCategory = categoria;
+    this.updateSubTotalMat();
   }
 
   submitForm() {
@@ -161,10 +161,7 @@ export class CreateProyectosComponent implements OnInit {
         this.toastr.error(this.firebaseError.codeError(error.code), 'Error')
       });
     }
-
   }
-
-
 
   selectTrabajador(trabajador: any) {
     this.selectedTrabajadores.push(trabajador);
@@ -181,15 +178,13 @@ export class CreateProyectosComponent implements OnInit {
     });
     this.selectedTrabajadoresForms.push(form);
     this.trabajadores = this.trabajadores.filter(m => m !== trabajador);
-
     // Create a new object with the form values and push it to Firebase
     const trabajadorData = {
       horas: 0,
       precioHora: 0,
       subtotal: 0,
       nombre: trabajador.nombre,
-      apellidos: trabajador.apellidos    };
-  
+      apellidos: trabajador.apellidos };  
   }
 
   unselectTrabajador(trabajador: any) {
@@ -243,22 +238,31 @@ export class CreateProyectosComponent implements OnInit {
   }
   
   updateSubTotalMat() {
-    let totalM = 0;
+    let totalM = 0;   
     this.selectedMaterials.forEach(material => {
       totalM += material.precio * material.formGroup.get('quantity')?.value;
     });
     this.totalM = totalM;
-    this.total = this.totalM + this.totalT;
+    this.total = this.totalM + this.totalT;  
+    if (this.selectedCategory) {
+      this.subTotalMat = this.totalM * (1 + this.porcentaje / 100);
+    } else {
+      this.subTotalMat = this.totalM;
+    }
     return totalM;
   }
   
   calcularSubtotalGeneral() {
     let subtotalMateriales = this.updateSubTotalMat();
     let subtotalTrabajadores = this.totalT;
-    this.totalP = subtotalMateriales + subtotalTrabajadores
-    return subtotalMateriales + subtotalTrabajadores;
-  } 
-  
+    let subtotal = subtotalMateriales + subtotalTrabajadores;
+    if (this.porcentaje > 0) {
+      subtotal *= (1 + this.porcentaje / 100);
+    }
+    this.totalP = subtotal;
+    return subtotal;
+  }
+   
   
   updateSubtotalTrab(selectedTrabajador: any) {
     selectedTrabajador.horas = selectedTrabajador.form.get('horas').value;
@@ -276,16 +280,6 @@ export class CreateProyectosComponent implements OnInit {
   
   
 
-/*   matSubtotalPlusPorcentaje(){
-    let valorComercial = this.updateSubTotalMat() * (1 + this.onCategoriaChange() / 100);
-    return valorComercial  
-    
-  } */
-
-  /* totalProyecto() {
-    this.totalP = this.totalM + this.totalT;
-    this.MatPorcentaje = this.matSubtotalPlusPorcentaje()
-  } */
 
 
 

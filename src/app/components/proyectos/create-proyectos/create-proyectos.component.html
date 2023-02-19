@@ -58,6 +58,7 @@
                 <label class="input-group-text" for="categoria">Categoría</label>
               </div>
             <select class="form-control form-select" formControlName="categoria" (change)="onCategoriaChange()">
+                <option value="" disabled>Select an Option</option>
               <option value="platinum">Platinum</option>
               <option value="gold">Gold</option>
               <option value="silver">Silver</option>
@@ -132,7 +133,11 @@
                       
                     <div *ngIf="selectedMaterials.length > 0" class="alert alert-success text-center">
                         Sub-Total Price Materiales: <span class="fw-bold">{{updateSubTotalMat() |currency}}</span>
-                    </div>                  
+                    </div>      
+                    
+                  <div *ngIf="porcentaje && subTotalMat > 0" class="pt-2">
+  <p>Subtotal de materiales con {{ porcentaje }}% de descuento: {{ (subTotalMat | currency) || 0 }}</p>
+</div>
                 </div>
 
             </div>
