@@ -38,7 +38,7 @@ export class CreateProyectosComponent implements OnInit {
   porcentaje = 0;
   selectedMaterials$ = new BehaviorSubject<any[]>([]);
   selectedCategory: string | null = null;
-  porcentajeModal!: number;
+
 
   constructor(
     private _proyectosServices: ProyectosService,
@@ -63,8 +63,7 @@ export class CreateProyectosComponent implements OnInit {
       endDate: this.formBuilder.control(''),
       precioHora: this.formBuilder.control(''),
       faseSelect: this.formBuilder.control(''),
-      categoria: this.formBuilder.control(''),
-      porcentajeModal: this.formBuilder.control(''),
+      categoria: this.formBuilder.control(''),  
     });
   }
 
@@ -105,29 +104,13 @@ export class CreateProyectosComponent implements OnInit {
     this.selectedMaterials = [];
     this.selectedTrabajadores = [];
     this.totalP = 0;
+    this.totalT = 0;
     this.porcentaje = 0;
     this.form.get('clientSelect')?.setValue('');
     this.form.get('clientType')?.setValue('');
     this.form.get('projecType')?.setValue('');
     this.form.get('faseSelect')?.setValue('');
-    this.form.get('categoria')?.setValue('');
-  }
-
-  onPorcentajeModalAceptar() {
-    const porcentajeInput = document.querySelector('#porcentaje-input') as HTMLInputElement;
-    const porcentaje = Number(porcentajeInput.value);
-    if (!isNaN(porcentaje)) {
-      this.porcentaje = porcentaje;
-    }
-    this.updateSubTotalMat();
-  }
-
-  onPorcentajeModalKeyPress(event: any) {
-    if (event.key === 'Enter') {
-      const porcentajeModalControl = this.form.get('porcentajeModal');
-      porcentajeModalControl?.markAsDirty();
-      this.onPorcentajeModalAceptar();
-    }
+    this.form.get('categoria')?.setValue('');    
   }
 
   onCategoriaChange() {
