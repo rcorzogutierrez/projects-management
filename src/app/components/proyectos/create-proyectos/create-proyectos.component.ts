@@ -38,6 +38,7 @@ export class CreateProyectosComponent implements OnInit {
   porcentaje = 0;
   selectedMaterials$ = new BehaviorSubject<any[]>([]);
   selectedCategory: string | null = null;
+  porcentajeModal!: number;
 
   constructor(
     private _proyectosServices: ProyectosService,
@@ -63,6 +64,7 @@ export class CreateProyectosComponent implements OnInit {
       precioHora: this.formBuilder.control(''),
       faseSelect: this.formBuilder.control(''),
       categoria: this.formBuilder.control(''),
+      porcentajeModal: this.formBuilder.control(''),
     });
   }
 
@@ -111,6 +113,23 @@ export class CreateProyectosComponent implements OnInit {
     this.form.get('categoria')?.setValue('');
   }
 
+  onPorcentajeModalAceptar() {
+    const porcentajeInput = document.querySelector('#porcentaje-input') as HTMLInputElement;
+    const porcentaje = Number(porcentajeInput.value);
+    if (!isNaN(porcentaje)) {
+      this.porcentaje = porcentaje;
+    }
+    this.updateSubTotalMat();
+  }
+
+  onPorcentajeModalKeyPress(event: any) {
+    if (event.key === 'Enter') {
+      const porcentajeModalControl = this.form.get('porcentajeModal');
+      porcentajeModalControl?.markAsDirty();
+      this.onPorcentajeModalAceptar();
+    }
+  }
+
   onCategoriaChange() {
     const categoriaControl = this.form.get('categoria');
     const categoria = categoriaControl?.value;
@@ -124,13 +143,22 @@ export class CreateProyectosComponent implements OnInit {
       case 'silver':
         this.porcentaje = 2.5;
         break;
+        case 'variable':
+          const porcentaje = prompt('Ingrese el porcentaje');
+          if (porcentaje !== null) {
+            this.porcentaje = parseFloat(porcentaje) || 0;
+          } else {
+            this.porcentaje = 0;
+          }
+        break;
       default:
         this.porcentaje = 0;
         break;
     }
     this.selectedCategory = categoria;
     this.updateSubTotalMat();
-  }
+}
+
 
   submitForm() {
     if (this.form.valid) {
