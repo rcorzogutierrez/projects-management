@@ -82,7 +82,7 @@
                 <input type="date" class="form-control" aria-label="end-date" aria-describedby="end-date" name="end-date" formControlName="endDate">
               </div>
             </div>
-          </div>
+          </div>       
 
           <div *ngIf="selectedMaterials.length > 0 || selectedTrabajadores.length > 0" class="alert alert-success text-center">
             Total Proyecto: <span class="fw-bold">{{calcularSubtotalGeneral() | currency}}</span>

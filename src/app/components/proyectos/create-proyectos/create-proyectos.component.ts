@@ -39,7 +39,6 @@ export class CreateProyectosComponent implements OnInit {
   selectedMaterials$ = new BehaviorSubject<any[]>([]);
   selectedCategory: string | null = null;
 
-
   constructor(
     private _proyectosServices: ProyectosService,
     private router: Router,
@@ -137,11 +136,10 @@ export class CreateProyectosComponent implements OnInit {
       default:
         this.porcentaje = 0;
         break;
-    }
+    }   
     this.selectedCategory = categoria;
     this.updateSubTotalMat();
 }
-
 
   submitForm() {
     if (this.form.valid) {
@@ -253,7 +251,7 @@ export class CreateProyectosComponent implements OnInit {
     }
   }
 
-  updateSubTotalMat() {
+  updateSubTotalMat() {   
     let totalM = 0;
     this.selectedMaterials.forEach(material => {
       totalM += material.precio * material.formGroup.get('quantity')?.value;
@@ -270,14 +268,14 @@ export class CreateProyectosComponent implements OnInit {
 
   calcularSubtotalGeneral() {
     let subtotalMateriales = this.updateSubTotalMat();
-    let subtotalTrabajadores = this.totalT;
-    let subtotal = subtotalMateriales + subtotalTrabajadores;
+    let total = subtotalMateriales;
     if (this.porcentaje > 0) {
-      subtotal *= (1 + this.porcentaje / 100);
+      total += subtotalMateriales * (this.porcentaje / 100);
     }
-    this.totalP = subtotal;
-    return subtotal;
-  }
+    total += this.totalT;
+    this.totalP = total;
+    return total;
+  }  
 
   updateSubtotalTrab(selectedTrabajador: any) {
     selectedTrabajador.horas = selectedTrabajador.form.get('horas').value;
@@ -287,5 +285,3 @@ export class CreateProyectosComponent implements OnInit {
     this.total = this.totalM + this.totalT;
   }
 }
-
-
