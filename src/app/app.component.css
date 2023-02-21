@@ -28,4 +28,8 @@
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
   }
+
+  .wrapper{
+    background-color: #f5f5f5;
+  }
   

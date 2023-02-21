@@ -1,22 +1,46 @@
-<!-- <nav class="navbar navbar-dark bg-primary">
-  <a class="route_link" routerLink="/" >
-  <span class="navbar-brand mb-0 h1">App Proyectos</span></a>
-  <div class="text-center">
-    <a class="btn btn-info" routerLink="/create-proyectos" role="button">Crear un Proyecto</a> 
-
-  </div>
-  <div class="dropdown">
-    <button
-      type="button"
-      class="btn btn-primary dropdown-toggle"
-      data-toggle="dropdown"
-    >
-      Admin
+<!-- <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
+      aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
     </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" routerLink="/list-materiales">Materiales</a>
-      <a class="dropdown-item" routerLink="/list-trabajadores">Trabajadores</a>     
-  
+
+    <a class="navbar-brand" routerLink="/">
+      <img src="../assets/Adrian Ramirez-1.png" height="25" alt="MDB Logo" loading="lazy" />
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+   
+      </ul>
+
+      <div *ngIf="isLoggedIn">
+        <button class="btn btn-outline-light " type="button" (click)="logOut()">Logout</button>
+      </div>
     </div>
   </div>
 </nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #89cff0;">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/dashboard"><img src="../../../assets/Adrian Ramirez-logos-2/Adrian Ramirez-logos_black.png" alt=""
+
+        width="30" height="30"></a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav 
+     me-auto 
+     mb-2 
+     mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+      </ul>
+      <div *ngIf="isLoggedIn">
+        <button class="btn btn-outline-light btn-primary " type="button" (click)="logOut()">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>

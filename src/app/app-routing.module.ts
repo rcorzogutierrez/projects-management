@@ -10,23 +10,24 @@ import { CreateProyectosComponent } from './components/proyectos/create-proyecto
 import { LoginComponent } from './components/login/login.component';
 import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AuthGuard } from './auth.guard';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'recuperar-password', component: RecuperarPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'list-clientes', component: ListClientesComponent },
-  { path: 'create-clientes', component: CreateClientesComponent },
-  { path: 'edit-cliente/:id', component: CreateClientesComponent },
-  { path: 'list-materiales', component: ListMaterialesComponent },
-  { path: 'create-materiales', component: CreateMaterialesComponent },
-  { path: 'edit-material/:id', component: CreateMaterialesComponent },
-  { path: 'list-trabajadores', component: ListTrabajadoresComponent },
-  { path: 'create-trabajadores', component: CreateTrabajadoresComponent },
-  { path: 'create-proyectos', component: CreateProyectosComponent },
-  { path: 'edit-trabajador/:id', component: CreateTrabajadoresComponent },
+  { path: 'recuperar-password', component: RecuperarPasswordComponent},
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'list-clientes', component: ListClientesComponent, canActivate: [AuthGuard] },
+  { path: 'create-clientes', component: CreateClientesComponent, canActivate: [AuthGuard] },
+  { path: 'edit-cliente/:id', component: CreateClientesComponent, canActivate: [AuthGuard] },
+  { path: 'list-materiales', component: ListMaterialesComponent, canActivate: [AuthGuard] },
+  { path: 'create-materiales', component: CreateMaterialesComponent, canActivate: [AuthGuard] },
+  { path: 'edit-material/:id', component: CreateMaterialesComponent, canActivate: [AuthGuard] },
+  { path: 'list-trabajadores', component: ListTrabajadoresComponent, canActivate: [AuthGuard] },
+  { path: 'create-trabajadores', component: CreateTrabajadoresComponent, canActivate: [AuthGuard] },
+  { path: 'create-proyectos', component: CreateProyectosComponent, canActivate: [AuthGuard] },
+  { path: 'edit-trabajador/:id', component: CreateTrabajadoresComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login', pathMatch: 'full' },
 ];
 
