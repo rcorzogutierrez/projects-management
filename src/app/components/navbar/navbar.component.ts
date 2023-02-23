@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logOut() {
-    this.afAuth.signOut().then(() => this.router.navigate(['/login']));
+    this.authService.logout();
   }
+  
 }

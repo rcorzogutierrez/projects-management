@@ -9,6 +9,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import 'zone.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
 
@@ -58,6 +59,7 @@ import { FirebaseErrorService } from './services/firebase-error.service';
     AngularFireAuthModule,
     ReactiveFormsModule,
     FormsModule,
+    RouterModule,
     ToastrModule.forRoot(),
   ],
   providers: [MaterialesService,TrabajadoresService,FirebaseErrorService],

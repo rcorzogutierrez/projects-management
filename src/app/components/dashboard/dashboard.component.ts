@@ -23,9 +23,4 @@ export class DashboardComponent {
       }
     })
   }
-
-  logOut() {
-    this.afAuth.signOut().then(() => this.router.navigate(['/login']));
-  }
-
 }

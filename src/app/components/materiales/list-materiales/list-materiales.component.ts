@@ -27,8 +27,7 @@ export class ListMaterialesComponent implements OnInit {
           id: element.payload.doc.id,
           ...element.payload.doc.data(),
         });
-      });
-      console.log(this.materiales);
+      });  
     });
   }
 
