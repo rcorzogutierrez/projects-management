@@ -16,8 +16,7 @@ export class DashboardComponent {
   ngOnInit(): void {
     this.afAuth.currentUser.then(user => {
       if(user) {
-        this.dataUser = user;
-        console.log(user)
+        this.dataUser = user;   
       } else {
         this.router.navigate(['/login']);
       }
