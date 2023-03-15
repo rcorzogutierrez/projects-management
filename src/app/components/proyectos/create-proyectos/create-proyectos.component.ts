@@ -284,4 +284,5 @@ export class CreateProyectosComponent implements OnInit {
     this.totalT = this.calcularTrabajador();
     this.total = this.totalM + this.totalT;
   }
+
 }
