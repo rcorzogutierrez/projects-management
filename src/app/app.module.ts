@@ -31,6 +31,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RecuperarPasswordComponent } from './components/recuperar-password/recuperar-password.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { FirebaseErrorService } from './services/firebase-error.service';
+import { ListProyectosComponent } from './components/proyectos/list-proyectos/list-proyectos.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { FirebaseErrorService } from './services/firebase-error.service';
     LoginComponent,
     DashboardComponent,
     RecuperarPasswordComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ListProyectosComponent
   ],
   imports: [
     BrowserModule,
