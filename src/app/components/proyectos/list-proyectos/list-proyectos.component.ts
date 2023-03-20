@@ -22,6 +22,7 @@ export class ListProyectosComponent {
 
   ngOnInit(): void {
     this.proyectosService.obtenerFilasTabla().subscribe(filasTabla => {
+      this.filasTabla = filasTabla;
       console.log(filasTabla);
     });
   }

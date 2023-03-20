@@ -1,24 +1,44 @@
-<div class="container mt-3"><div class="card">
-    <div class="card-body">
-      <table>
-        <thead>
-          <tr>
-            <th>Cliente</th>
-            <th>Proyectos</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let fila of filasTabla">
-            <tr>
-              <td>{{ fila.cliente }}</td>
-              <td>
-                <ul>
-                  
-                </ul>
-              </td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
-   </div>
-</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Cliente</th>
+      <th>Client Select</th>
+      <th>Categoría</th>
+      <th>Fecha Inicio</th>
+      <th>Fecha Fin</th>
+      <th>Subtotal Materiales</th>
+      <th>Subtotal Trabajadores</th>
+      <th>Tipo de Proyecto</th>
+      <th>Total Proyecto</th>
+      <th>Materiales</th>
+      <th>Trabajadores</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let fila of filasTabla">
+      <td>{{ fila.cliente }}</td>
+      <td>{{ fila.proyectos.clientSelect }}</td>
+      <td>{{ fila.proyectos.categoria }}</td>
+      <td>{{ fila.proyectos.fechaInicio }}</td>
+      <td>{{ fila.proyectos.fechaFin }}</td>
+      <td>{{ fila.proyectos.subTotalMat }}</td>
+      <td>{{ fila.proyectos.subtotalTrabajadores }}</td>
+      <td>{{ fila.proyectos.projecType }}</td>
+      <td>{{ fila.proyectos.totalProyecto }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let material of fila.proyectos.materials">
+            {{ material }}
+          </li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li *ngFor="let trabajador of fila.proyectos.trabajadores">
+            Trabajador: {{trabajador.id}}Horas: {{ trabajador.horas }}, Precio/hora: {{ trabajador.precioHora }}, Subtotal: {{ trabajador.subtotal }}
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

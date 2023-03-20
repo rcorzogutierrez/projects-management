@@ -5,7 +5,6 @@ import { FilaTabla, } from '../interfaces/project';
 import { Cliente } from '../interfaces/clientes';
 import { Project } from '../interfaces/project';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -61,9 +60,5 @@ export class ProyectosService {
       })
     );
   }
-
-  
-
-
 
 }
