@@ -4,7 +4,8 @@ export interface Material {
   id: string;
   nombre: string;
   descripcion: string;
-  precio: number;  
+  precio: number;
+  cantidad: number;  
 }
 
 export interface Materiales {

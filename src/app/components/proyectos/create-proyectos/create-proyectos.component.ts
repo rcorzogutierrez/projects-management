@@ -156,9 +156,17 @@ export class CreateProyectosComponent implements OnInit {
         projecType: this.form.get('projecType')?.value,
         faseSelect: this.form.get('faseSelect')?.value,
         categoria: this.form.get('categoria')?.value,
-        materials: this.selectedMaterials.map(material => material.id), // Solo se guardan los IDs de los materiales seleccionados
+        materials: this.selectedMaterials.map(material => ({
+          id:material.id,
+          nombre:material.nombre,
+          cantidad:material.cantidad,
+          precio:material.precio,        
+        })
+         ), 
+
         trabajadores: this.selectedTrabajadores.map(trabajador => ({
           id: trabajador.id,
+          nombre:trabajador.nombre,
           horas: trabajador.horas,
           precioHora: trabajador.precioHora,
           subtotal: trabajador.subtotal
@@ -169,7 +177,7 @@ export class CreateProyectosComponent implements OnInit {
         this.toastr.info('Se ha guardado exitosamente el proyecto', 'Proyecto Guardado')
         this.form.reset();
         this.limpiarForm();
-        this.router.navigate(['/list-clientes']);
+        this.router.navigate(['/list-proyectos']);
       }).catch((error) => {
         this.toastr.error(this.firebaseError.codeError(error.code), 'Error')
       });

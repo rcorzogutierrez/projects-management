@@ -1,32 +1,5 @@
 <app-navbar *ngIf="isLoggedIn"></app-navbar>
 
-<div *ngIf="isLoggedIn">
-  <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-    <div class="position-sticky">
-      <div class="list-group list-group-flush mx-3 mt-4">
-        <a routerLink="/dashboard" class="list-group-item list-group-item-action py-2 ripple" aria-current="true">
-          <i class="fas fa-tachometer-alt fa-fw me-3"></i><span>Main dashboard</span>
-        </a>
-        <a routerLink="/create-proyectos" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-chart-line fa-fw me-3"></i><span>Crear Proyecto</span>
-        </a>
-        <a routerLink="/list-proyectos" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-list fa-fw me-3"></i><span>List Proyecto</span>
-        </a>
-        <a routerLink="/list-materiales" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-warehouse fa-fw me-3"></i><span>Materiales</span>
-        </a>
-        <a routerLink="/list-trabajadores" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-truck-monster fa-fw me-3"></i><span>Trabajadores</span>
-        </a>
-        <a routerLink="/list-clientes" class="list-group-item list-group-item-action py-2 ripple">
-          <i class="fas fa-handshake fa-fw me-3"></i><span>Clientes</span>
-        </a>
-      </div>
-    </div>
-  </nav>
-</div>
-
-<main class="container-fluid">
+<main class="container-fluid mt-5 pt-3 bg-primary-light">
   <router-outlet></router-outlet>
 </main>

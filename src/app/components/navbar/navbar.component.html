@@ -1,46 +1,32 @@
-<!-- <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-primary fixed-top">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu"
-      aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <a class="navbar-brand" routerLink="/">
-      <img src="../assets/Adrian Ramirez-1.png" height="25" alt="MDB Logo" loading="lazy" />
-    </a>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-   
-      </ul>
-
-      <div *ngIf="isLoggedIn">
-        <button class="btn btn-outline-light " type="button" (click)="logOut()">Logout</button>
-      </div>
-    </div>
-  </div>
-</nav> -->
-
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #89cff0;">
-  <div class="container">
-    <a class="navbar-brand" routerLink="/dashboard"><img src="../../../assets/Adrian Ramirez-logos-2/Adrian Ramirez-logos_black.png" alt=""
-
-        width="30" height="30"></a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav 
-     me-auto 
-     mb-2 
-     mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-      </ul>
-      <div *ngIf="isLoggedIn">
-        <button class="btn btn-outline-light btn-primary " type="button" (click)="logOut()">Logout</button>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #89cff0; ">
+  <a class="navbar-brand" routerLink="/dashboard"><img src="../../../assets/Adrian Ramirez-logos-2/Adrian Ramirez-logos_black.png" alt="" width="30" height="30" style="margin-left: 10px;"></a>
+ <!--  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon">hola</span>
+  </button> -->
+  <div class="collapse navbar-collapse " id="navbarNav" >
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+      <li class="nav-item ">
+        <a class="nav-link " routerLink="/dashboard">Main Dashboard</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/list-proyectos">Proyectos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/list-materiales">Materiales</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/list-trabajadores">Trabajadores</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/list-clientes">Clientes</a>
+      </li>
+    </ul>
+    <div *ngIf="isLoggedIn">
+      <div class="d-flex align-items-end justify-content-end">
+      <button class="btn btn-outline-light" style="margin-right: 10px;" type="button" (click)="logOut()">Logout</button></div>
     </div>
   </div>
 </nav>
+
+

@@ -16,3 +16,34 @@ html,body{
 .errorLabel{
    margin-left: 5px;
 }
+
+:root {
+  --primary-color: #89cff0;
+}
+
+/* Colores más oscuros */
+.bg-primary-dark {
+  background-color: hsl(200, 80%, 70%);
+}
+
+.text-primary-dark {
+  color: hsl(200, 80%, 70%);
+}
+
+/* Colores medios */
+.bg-primary-medium {
+  background-color: hsl(200, 80%, 85%);
+}
+
+.text-primary-medium {
+  color: hsl(200, 80%, 85%);
+}
+
+/* Colores más claros */
+.bg-primary-light {
+  background-color: hsl(200, 80%, 95%);
+}
+
+.text-primary-light {
+  color: hsl(200, 80%, 95%);
+}

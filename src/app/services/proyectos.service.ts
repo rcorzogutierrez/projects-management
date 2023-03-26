@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { map, Observable, forkJoin, mergeMap } from 'rxjs';
+import { map, Observable, forkJoin, mergeMap, switchMap } from 'rxjs';
 import { FilaTabla, } from '../interfaces/project';
 import { Cliente } from '../interfaces/clientes';
 import { Project } from '../interfaces/project';
@@ -27,23 +27,23 @@ export class ProyectosService {
             const proyectosRef = this.firestore.collection<Project>('clientes').doc(clienteId).collection<Project>('proyectos');
             return proyectosRef.get().pipe(
               map((proyectosSnapshot) => {
-                //console.log('proyectosSnapshot:', proyectosSnapshot); // Agrega este console.log() para depurar
                 return proyectosSnapshot.docs.map((proyectoDoc) => {
                   const proyecto = proyectoDoc.data();
-                  //console.log('proyecto:', proyecto); // Agrega este console.log() para depurar
+                  const id = proyectoDoc.id; // Agregamos la propiedad 'id' al objeto 'proyecto'
                   const fila: FilaTabla = {
                     cliente: clienteDoc.data().nombre,
                     proyectos: {
-                      clientSelect:proyecto.clientSelect,
-                      categoria:proyecto.categoria,
-                      fechaInicio:proyecto.fechaInicio,
-                      fechaFin:proyecto.fechaFin,
-                      subTotalMat:proyecto.subTotalMat,
-                      subtotalTrabajadores:proyecto.subtotalTrabajadores,
-                      projecType:proyecto.projecType,
-                      totalProyecto:proyecto.totalProyecto,
-                      materials:proyecto.materials,
-                      trabajadores:proyecto.trabajadores
+                      id: id, // Asignamos el valor del ID a la propiedad 'id' del objeto 'proyecto'
+                      clientSelect: proyecto.clientSelect,
+                      categoria: proyecto.categoria,
+                      fechaInicio: proyecto.fechaInicio,
+                      fechaFin: proyecto.fechaFin,
+                      subTotalMat: proyecto.subTotalMat,
+                      subtotalTrabajadores: proyecto.subtotalTrabajadores,
+                      projecType: proyecto.projecType,
+                      totalProyecto: proyecto.totalProyecto,
+                      materials: proyecto.materials,
+                      trabajadores: proyecto.trabajadores
                     }
                   };
                   return fila;
@@ -56,9 +56,13 @@ export class ProyectosService {
     );
     return proyectosPorCliente$.pipe(
       map((filasPorCliente) => {
-        return filasPorCliente.flat();
+        const filas = filasPorCliente.flat();
+        console.log(filas); // Agregamos un console.log para ver los resultados en la consola
+        return filas;
       })
     );
   }
+  
+  
 
 }

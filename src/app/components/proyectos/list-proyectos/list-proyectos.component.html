@@ -1,8 +1,20 @@
-<table class="table">
+<div class="container mt-3">
+  <div class="card pt-5" style="width: 95rem;">
+    <div class="card-body">
+      <figure class="text-center">
+        <div class="mt-3"> <h1 class="display-6 text-primary card-title">Lista de Proyectos</h1>
+        </div>
+      </figure>  <button
+      class="btn btn-primary btn-lg float-end"
+      routerLink="/create-proyectos"
+    >
+      Agregar
+    </button>
+
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Cliente</th>
-      <th>Client Select</th>
+      <th>Cliente</th>  
       <th>Categoría</th>
       <th>Fecha Inicio</th>
       <th>Fecha Fin</th>
@@ -12,33 +24,44 @@
       <th>Total Proyecto</th>
       <th>Materiales</th>
       <th>Trabajadores</th>
+      <th>Accion</th>
+  
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let fila of filasTabla">
-      <td>{{ fila.cliente }}</td>
-      <td>{{ fila.proyectos.clientSelect }}</td>
+     
+      <td>{{ fila.cliente }}</td>       
       <td>{{ fila.proyectos.categoria }}</td>
       <td>{{ fila.proyectos.fechaInicio }}</td>
       <td>{{ fila.proyectos.fechaFin }}</td>
-      <td>{{ fila.proyectos.subTotalMat }}</td>
-      <td>{{ fila.proyectos.subtotalTrabajadores }}</td>
+      <td>{{ fila.proyectos.subTotalMat | currency}}</td>
+      <td>{{ fila.proyectos.subtotalTrabajadores| currency }}</td>
       <td>{{ fila.proyectos.projecType }}</td>
-      <td>{{ fila.proyectos.totalProyecto }}</td>
+      <td>{{ fila.proyectos.totalProyecto | currency}}</td>
       <td>
         <ul>
           <li *ngFor="let material of fila.proyectos.materials">
-            {{ material }}
+            Nombre: {{ material.nombre }} Precio: {{material.precio}} Cantidad: {{material.cantidad}}
           </li>
         </ul>
       </td>
       <td>
         <ul>
           <li *ngFor="let trabajador of fila.proyectos.trabajadores">
-            Trabajador: {{trabajador.id}}Horas: {{ trabajador.horas }}, Precio/hora: {{ trabajador.precioHora }}, Subtotal: {{ trabajador.subtotal }}
+            Trabajador: {{trabajador.nombre}} Horas: {{ trabajador.horas }}, Precio/hora: {{ trabajador.precioHora }}, Subtotal: {{ trabajador.subtotal }}
           </li>
         </ul>
       </td>
+      <td>       
+        <i
+        (click)="eliminarProyecto(fila.proyectos.clientSelect, fila.proyectos.id)"
+                class="fas fa-trash-alt fa-lg text-danger ms-2"
+              ></i>
+      </td>
+     
     </tr>
   </tbody>
 </table>
+
+</div></div></div>

@@ -1,6 +1,7 @@
 import { Material } from "./materiales";
 
 export interface Project {
+  id:string;
   clientSelect: string;
   categoria: string;
   fechaInicio: Date;
@@ -14,8 +15,10 @@ export interface Project {
 }
 
 export interface FilaTabla {
+  
   cliente: string;
   proyectos: {
+    id:string;
     clientSelect: string;
     categoria: string;
     fechaInicio: Date;
