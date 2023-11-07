@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ProyectosService } from 'src/app/services/proyectos.service';
+import { ProyectosService } from '../../../services/proyectos.service';
 import { Subscription } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FilaTabla, Project } from '../../../interfaces/project';
