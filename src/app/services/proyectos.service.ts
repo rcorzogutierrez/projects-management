@@ -31,6 +31,7 @@ export class ProyectosService {
                   const proyecto = proyectoDoc.data();
                   const id = proyectoDoc.id; // Agregamos la propiedad 'id' al objeto 'proyecto'
                   const fila: FilaTabla = {
+                    mostrarDetalles: false,
                     cliente: clienteDoc.data().nombre,
                     proyectos: {
                       id: id, // Asignamos el valor del ID a la propiedad 'id' del objeto 'proyecto'

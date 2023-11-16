@@ -11,57 +11,64 @@
       Agregar
     </button>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Cliente</th>  
-      <th>Categoría</th>
-      <th>Fecha Inicio</th>
-      <th>Fecha Fin</th>
-      <th>Subtotal Materiales</th>
-      <th>Subtotal Trabajadores</th>
-      <th>Tipo de Proyecto</th>
-      <th>Total Proyecto</th>
-      <th>Materiales</th>
-      <th>Trabajadores</th>
-      <th>Accion</th>
-  
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let fila of filasTabla">
-     
-      <td>{{ fila.cliente }}</td>       
-      <td>{{ fila.proyectos.categoria }}</td>
-      <td>{{ fila.proyectos.fechaInicio }}</td>
-      <td>{{ fila.proyectos.fechaFin }}</td>
-      <td>{{ fila.proyectos.subTotalMat | currency}}</td>
-      <td>{{ fila.proyectos.subtotalTrabajadores| currency }}</td>
-      <td>{{ fila.proyectos.projecType }}</td>
-      <td>{{ fila.proyectos.totalProyecto | currency}}</td>
-      <td>
-        <ul>
-          <li *ngFor="let material of fila.proyectos.materials">
-            Nombre: {{ material.nombre }} Precio: {{material.precio}} Cantidad: {{material.cantidad}}
-          </li>
-        </ul>
-      </td>
-      <td>
-        <ul>
-          <li *ngFor="let trabajador of fila.proyectos.trabajadores">
-            Trabajador: {{trabajador.nombre}} Horas: {{ trabajador.horas }}, Precio/hora: {{ trabajador.precioHora }}, Subtotal: {{ trabajador.subtotal }}
-          </li>
-        </ul>
-      </td>
-      <td>       
-        <i
-        (click)="eliminarProyecto(fila.proyectos.clientSelect, fila.proyectos.id)"
-                class="fas fa-trash-alt fa-lg text-danger ms-2"
-              ></i>
-      </td>
-     
-    </tr>
-  </tbody>
-</table>
-
-</div></div></div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Categoría</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Tipo de Proyecto</th>
+          <th>Total Proyecto</th>
+       
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fila of filasTabla">
+          <td>{{ fila.cliente }}</td>
+          <td>{{ fila.proyectos.categoria }}</td>
+          <td>{{ fila.proyectos.fechaInicio }}</td>
+          <td>{{ fila.proyectos.fechaFin }}</td>
+          <td>{{ fila.proyectos.projecType }}</td>
+          <td>{{ fila.proyectos.totalProyecto | currency }}</td>
+      
+          <td>
+            <i (click)="eliminarProyecto(fila.proyectos.clientSelect, fila.proyectos.id)" class="fas fa-trash-alt fa-lg text-danger mx-2"></i>
+            <i (click)="mostrarDetalles(fila)" class="fas fa-plus-circle mx-2"></i>
+        </td>
+        
+        
+        </tr>
+      </tbody>
+    </table>
+    <modal id="modal-1">
+      <div class="modal-header">
+          <h5 class="modal-title">Detalles</h5>
+          <button type="button" class="btn-close" (click)="modalService.close();"></button>
+      </div>
+      <div class="modal-body">
+          <!-- <p>Detalles de Materiales y Mano de obra</p> -->
+       
+              <label class="form-label">Detalles de Materiales y Mano de obra:</label>
+              <h4>Materiales:</h4>
+              <ul>
+                <li *ngFor="let material of detallesFila?.proyectos?.materials">
+                  Nombre: {{ material.nombre }} Precio: {{material.precio}} Cantidad: {{material.cantidad}}
+                </li>
+              </ul>
+              <h4>Trabajadores:</h4>
+              <ul>
+                <li *ngFor="let trabajador of detallesFila?.proyectos?.trabajadores">
+                  Trabajador: {{trabajador?.nombre}} Horas: {{ trabajador?.horas }}, Precio/hora: {{ trabajador?.precioHora }}, Subtotal: {{ trabajador?.subtotal }}
+                </li>
+              </ul>
+       
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="modalService.close();">Close</button>
+      </div>
+  </modal>
+</div>
+</div>
+</div>

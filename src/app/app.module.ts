@@ -32,6 +32,8 @@ import { RecuperarPasswordComponent } from './components/recuperar-password/recu
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { FirebaseErrorService } from './services/firebase-error.service';
 import { ListProyectosComponent } from './components/proyectos/list-proyectos/list-proyectos.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { ModalService } from './services/modal.service';
 
 
 @NgModule({
@@ -50,7 +52,8 @@ import { ListProyectosComponent } from './components/proyectos/list-proyectos/li
     DashboardComponent,
     RecuperarPasswordComponent,
     SpinnerComponent,
-    ListProyectosComponent
+    ListProyectosComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,7 @@ import { ListProyectosComponent } from './components/proyectos/list-proyectos/li
     RouterModule,
     ToastrModule.forRoot(),
   ],
-  providers: [MaterialesService,TrabajadoresService,FirebaseErrorService],
+  providers: [MaterialesService,TrabajadoresService,FirebaseErrorService,ModalService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

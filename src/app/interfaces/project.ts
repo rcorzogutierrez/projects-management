@@ -17,6 +17,7 @@ export interface Project {
 export interface FilaTabla {
   
   cliente: string;
+  mostrarDetalles: boolean;
   proyectos: {
     id:string;
     clientSelect: string;

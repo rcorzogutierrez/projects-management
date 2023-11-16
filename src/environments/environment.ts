@@ -4,13 +4,13 @@
 
 export const environment = {
   firebase: {
-    projectId: 'clientes-adrian',
-    appId: '1:806995554831:web:47e4e30576fedb55e2a97a',
-    storageBucket: 'clientes-adrian.appspot.com',
-    apiKey: 'AIzaSyAcLdDaJZYwYVL3l63XuOVYhTx9WiC6MAc',
-    authDomain: 'clientes-adrian.firebaseapp.com',
-    messagingSenderId: '806995554831',
-    measurementId: 'G-1XJ8DW2F8L',
+    apiKey: "AIzaSyAcLdDaJZYwYVL3l63XuOVYhTx9WiC6MAc",
+    authDomain: "clientes-adrian.firebaseapp.com",
+    projectId: "clientes-adrian",
+    storageBucket: "clientes-adrian.appspot.com",
+    messagingSenderId: "806995554831",
+    appId: "1:806995554831:web:47e4e30576fedb55e2a97a",
+    measurementId: "G-1XJ8DW2F8L"
   },
     production: false,
     
