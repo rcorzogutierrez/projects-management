@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'create-trabajadores', component: CreateTrabajadoresComponent, canActivate: [AuthGuard] },
   { path: 'create-proyectos', component: CreateProyectosComponent, canActivate: [AuthGuard] },
   { path: 'list-proyectos', component:ListProyectosComponent,canActivate:[AuthGuard]},
+  { path: 'edit-proyecto/:id', component: CreateProyectosComponent, canActivate: [AuthGuard] },
   { path: 'edit-trabajador/:id', component: CreateTrabajadoresComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/dashboard', pathMatch: 'full' },
 ];
