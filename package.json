@@ -1,18 +1,23 @@
 {
-  "name": "clientes",
-  "version": "0.0.0",
+  "name": "projects-management",
+  "version": "1.0.0",
+  "description": "projects admin",
+  "main": "index.js",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://rcorzogutierrez/projects-management"
+  },
+  "author": "Rafael Corzo",
+  "license": "ISC",
   "dependencies": {
     "@angular/animations": "^18.1.2",
+    "@angular/cli": "^18.1.2",
     "@angular/common": "^18.1.2",
     "@angular/compiler": "^18.1.2",
+    "@angular/compiler-cli": "^18.1.2",
     "@angular/core": "^18.1.2",
     "@angular/fire": "^18.0.1",
     "@angular/forms": "^18.1.2",
@@ -20,25 +25,11 @@
     "@angular/platform-browser-dynamic": "^18.1.2",
     "@angular/router": "^18.1.2",
     "firebase": "^10.12.4",
-    "glob": "^11.0.0",
-    "ngx-toastr": "^16.0.1",
-    "rxjs": "^7.8.0",
-    "toastr": "^2.1.4",
-    "tslib": "^2.3.0",
-    "with": "^7.0.2",
+    "ngx-toastr": "^19.0.0",
+    "typescript": "^5.5.4",
     "zone.js": "^0.14.8"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^18.1.2",
-    "@angular/cli": "^18.1.2",
-    "@angular/compiler-cli": "^18.1.2",
-    "@types/jasmine": "~4.3.0",
-    "jasmine-core": "~4.5.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~5.4.5"
+    "@angular-devkit/build-angular": "^18.1.2"
   }
 }
