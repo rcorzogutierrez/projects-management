@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import 'zone.js';
-import 'zone.js/dist/long-stack-trace-zone.js';
+//import 'zone.js/dist/long-stack-trace-zone.js';
 
 import { ToastrModule } from 'ngx-toastr';
 
