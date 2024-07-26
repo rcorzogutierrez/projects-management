@@ -7,7 +7,7 @@ import { Materiales } from '../../../interfaces/materiales';
 import { ProyectosService } from '../../../services/proyectos.service';
 import { ToastrService } from 'ngx-toastr';
 import { FirebaseErrorService } from '../../../services/firebase-error.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -38,6 +38,7 @@ export class CreateProyectosComponent implements OnInit {
   porcentaje = 0;
   selectedMaterials$ = new BehaviorSubject<any[]>([]);
   selectedCategory: string | null = null;
+  id: string | null;
 
   constructor(
     private _proyectosServices: ProyectosService,
@@ -48,7 +49,8 @@ export class CreateProyectosComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private firebaseError: FirebaseErrorService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private aRoute: ActivatedRoute
 
   ) {
     this.form = this.formBuilder.group<{ [key: string]: AbstractControl }>({
@@ -64,9 +66,11 @@ export class CreateProyectosComponent implements OnInit {
       faseSelect: this.formBuilder.control(''),
       categoria: this.formBuilder.control(''),  
     });
+    this.id = this.aRoute.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
+    this.esEditar();
     this.clients = [];
     this.onCategoriaChange();
     this._materialesService.getMateriales().subscribe(materiales => this.materials = materiales);
@@ -96,6 +100,15 @@ export class CreateProyectosComponent implements OnInit {
     });
     this.startDate = new Date();
     this.endDate = new Date();
+  }
+
+  esEditar() { 
+    //this.titulo = 'Editar Trabajador';
+    if (this.id !== null) {
+      this._proyectosServices.getProyecto(this.id).subscribe((data) => {
+        console.log(data.payload.data()['categoria']);
+      })
+    }   
   }
 
   limpiarForm() {

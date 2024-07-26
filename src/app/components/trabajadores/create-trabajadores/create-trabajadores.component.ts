@@ -95,8 +95,7 @@ export class CreateTrabajadoresComponent implements OnInit{
     if (this.id !== null) {
       this.loading = true;
       this._trabajadoresService.getTrabajador(this.id).subscribe((data) => {
-        this.loading = false;
-        console.log(data.payload.data()['nombre']);
+        this.loading = false;        
         this.createTrabajador.setValue({
           nombre: data.payload.data()['nombre'],
           apellidos: data.payload.data()['apellidos'],

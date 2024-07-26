@@ -30,19 +30,14 @@ export class ListProyectosComponent {
     private cdRef: ChangeDetectorRef
     ) { }
 
-  ngOnInit(): void {
-    this.esEditar();
+  ngOnInit(): void {   
     this.proyectosService.obtenerFilasTabla().subscribe(filasTabla => {
       this.filasTabla = filasTabla;
-      console.log(filasTabla);
+      //console.log(filasTabla);
       this.cdRef.detectChanges(); // agregar esta línea para actualizar la vista
     });
   }
-  esEditar() {
-
-    
-  }
-
+  
   eliminarProyecto(clienteId: string, proyectoId: string): Promise<void> {
     const proyectosRef = this.firestore.collection<Project>('clientes').doc(clienteId).collection<Project>('proyectos');
     return proyectosRef.doc(proyectoId).delete().then(() => {

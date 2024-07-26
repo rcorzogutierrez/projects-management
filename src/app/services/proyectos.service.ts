@@ -16,6 +16,18 @@ export class ProyectosService {
     const projectRef = this.firestore.collection('clientes').doc(idcliente).collection('proyectos');
     return projectRef.add(proyecto);
   }
+
+  actualizarProyecto(id: string, data: any): Promise<any> {
+    return this.firestore.collection('proyectos').doc(id).update(data);
+  }
+
+  getProyectos(): Observable<any> {
+    return this.firestore.collection('proyectos').snapshotChanges();
+  }
+
+  getProyecto(id: string): Observable<any> {
+    return this.firestore.collection('proyectos').doc(id).snapshotChanges();
+  }
  
   obtenerFilasTabla(): Observable<FilaTabla[]> {
     const clientesRef = this.firestore.collection<Cliente>('clientes');
